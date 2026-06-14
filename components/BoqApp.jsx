@@ -20,7 +20,7 @@ const CONS_LOGO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBA
 
 /* ----------------------------- THEME TOKENS ----------------------------- */
 const THEMES = {
-  cons: { name: "CONS เขียว-ดำ-ขาว", bg: "#eef1ee", surface: "#ffffff", surface2: "#e6ebe6", text: "#13201a", muted: "#5d6b62", border: "#d2dad3", accent: "#1f5a37", accent2: "#16241b", head: "#16241b", headText: "#f3f7f3", danger: "#b3261e" },
+  cons: { name: "CONS ขาว-เขียว", bg: "#fafbfa", surface: "#ffffff", surface2: "#f1f4f1", text: "#1a1a1a", muted: "#6b746e", border: "#e6eae7", accent: "#1f6e44", accent2: "#16241b", head: "#ffffff", headText: "#1a1a1a", danger: "#b3261e" },
   minimal_white: { name: "Minimal White", bg: "#f7f6f3", surface: "#ffffff", surface2: "#f1efea", text: "#1c1b19", muted: "#7c7872", border: "#e6e2da", accent: "#2f6f4f", accent2: "#c8a45c", head: "#1c1b19", headText: "#ffffff", danger: "#b3261e" },
   architect_black: { name: "Architect Black", bg: "#101113", surface: "#17191c", surface2: "#1f2227", text: "#eceef0", muted: "#9aa0a6", border: "#2a2e34", accent: "#d7b56d", accent2: "#5b8def", head: "#000000", headText: "#f3d9a0", danger: "#ef5350" },
   warm_beige: { name: "Warm Beige Studio", bg: "#efe7da", surface: "#faf5ec", surface2: "#e8ddca", text: "#3a3228", muted: "#8a7d68", border: "#ddcfb8", accent: "#a3683f", accent2: "#7a8b5a", head: "#5b4a35", headText: "#f7efe2", danger: "#a8412c" },
@@ -83,13 +83,13 @@ const sampleRow = (o) => ({
 
 const SAMPLE_PROJECTS = [
   {
-    id: "p1", code: "BKK-2026-001", name: "คาเฟ่ The Slow Bar ทองหล่อ",
-    type: "คาเฟ่", style: "Japandi", area: 120, budget: 3000000, tier: "พรีเมียม",
-    province: "กรุงเทพมหานคร", location: "ทองหล่อ ซอย 11", status: "ส่งแล้ว",
-    startDate: "2026-05-01", updatedAt: "2026-06-10",
-    client: { name: "คุณนภัสสร วงศ์ไพศาล", company: "Slow Living Co., Ltd.", address: "88/12 ถ.สุขุมวิท คลองตันเหนือ วัฒนา กทม. 10110", phone: "081-234-5678", email: "napat@slowliving.co", taxId: "0105563000000", contact: "คุณนภัสสร", position: "เจ้าของกิจการ", note: "" },
+    id: "siin-main", code: "SIIN-2026-001", name: "ศิลป์เศรษวรา สิปวรา", locked: true,
+    type: "ตกแต่งภายใน", style: "", area: 0, budget: 1000000, tier: "พรีเมียม",
+    province: "กรุงเทพมหานคร", location: "", status: "เซ็นสัญญาแล้ว",
+    startDate: "2026-01-01", updatedAt: "2026-01-01",
+    client: { name: "ศิลป์เศรษวรา สิปวรา", company: "SIIN CONCEPT", address: "", phone: "", email: "", taxId: "", contact: "ศิลป์เศรษวรา สิปวรา", position: "เจ้าของกิจการ", note: "ราคาจ้างงาน 1,000,000 บาท" },
     settings: { vatEnabled: true, vatPct: 7, whtPct: 3, defWaste: 5, defCommission: 3, defOverhead: 8, defProfit: 15, rounding: 0, vatMode: "exclusive" },
-    sections: [],
+    sections: [{ id: "s1", title: "งานทั่วไป", color: "#2f6f4f", rows: [] }],
   },
 ];
 
@@ -153,8 +153,9 @@ const STYLE = `
 .estima { font-family: var(--font-body); color: var(--text); background: var(--bg); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 .estima h1,.estima h2,.estima h3,.estima .head { font-family: var(--font-head); }
 .es-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 18px rgba(0,0,0,.05); }
-.es-sidebar { background: var(--head); color: var(--headText); }
-.es-sidebar .es-divider { background: color-mix(in srgb, var(--headText) 18%, transparent); }
+.es-sidebar { background: #ffffff !important; color: #1a1a1a !important; border-right: 1px solid #e6eae7; }
+.es-sidebar .es-divider { background: #e6eae7 !important; }
+.es-sidebar .head { color: #16241b; }
 .es-soft { background: var(--surface2); }
 .es-btn { display:inline-flex; align-items:center; gap:8px; border-radius:11px; padding:9px 14px; font-weight:700; font-size:14px; border:1px solid var(--border); background: var(--surface); color: var(--text); cursor:pointer; transition: all .15s; }
 .es-btn:hover { transform: translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,.1); }
@@ -165,11 +166,13 @@ const STYLE = `
 .es-input:focus, .es-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
 .es-label { font-size:12px; color: var(--muted); font-weight:600; margin-bottom:5px; display:block; }
 .es-pill { font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; display:inline-flex; align-items:center; gap:4px; }
-.es-nav { display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:11px; cursor:pointer; color:color-mix(in srgb, var(--headText) 62%, transparent); font-weight:600; font-size:14px; transition:all .15s; }
-.es-nav:hover { background: color-mix(in srgb, var(--headText) 12%, transparent); color: var(--headText); }
+.es-nav { display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:11px; cursor:pointer; color:#3a443e !important; font-weight:600; font-size:14px; transition:all .15s; }
+.es-nav:hover { background: rgba(31,110,68,.09); color:#1f6e44 !important; }
+.es-nav.active { color:#fff !important; }
+.es-nav.active * { color:#fff !important; }
 .es-nav.active { background: var(--accent); color:#fff; box-shadow:0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent); }
 .es-table { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; }
-.es-table th { background: var(--head); color: var(--headText); font-weight:700; padding:9px 8px; text-align:right; white-space:nowrap; font-size:12px; position:sticky; top:0; z-index:2; }
+.es-table th { background: #fff; color: var(--text); font-weight:700; padding:9px 8px; text-align:right; white-space:nowrap; font-size:12px; position:sticky; top:0; z-index:2; border-bottom:2px solid var(--accent); }
 .es-table th:first-child, .es-table td:first-child { text-align:center; }
 .es-table th.l, .es-table td.l { text-align:left; }
 .es-table td { padding:6px 8px; border-bottom:1px solid var(--border); vertical-align:middle; }
@@ -186,8 +189,46 @@ const STYLE = `
 .grad-accent { background: linear-gradient(135deg, var(--accent), var(--accent2)); }
 .es-chip { font-size:12px; padding:4px 10px; border-radius:999px; border:1px solid var(--border); cursor:pointer; background:var(--surface); color:var(--muted); font-weight:600; }
 .es-chip.on { background: var(--accent); color:#fff; border-color:var(--accent); }
+.es-navhead { font-size:10px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color: #97a09a !important; padding:8px 10px 3px; }
+.es-navrow:hover { background: color-mix(in srgb, var(--accent) 8%, transparent) !important; }
+.es-greenpanel { background: #1f5a37 !important; color: #ffffff !important; border-color: transparent !important; }
+.es-greenpanel * { color: #ffffff !important; }
+.es-greenpanel .es-netred { color: #ff5a5a !important; }
+.es-greenpanel .es-divider { background: color-mix(in srgb, var(--headText) 28%, transparent) !important; }
 .es-spin { animation: es-spin 1s linear infinite; }
 @keyframes es-spin { to { transform: rotate(360deg); } }
+
+/* ===== Animation system (ทำให้แอปมีชีวิต) ===== */
+@keyframes fadeInUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform:none; } }
+@keyframes popIn { 0% { opacity:0; transform: scale(.92); } 100% { opacity:1; transform: scale(1); } }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes pulseGlow { 0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); } 50% { box-shadow: 0 0 0 10px transparent; } }
+@keyframes gradientMove { 0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; } }
+@keyframes shimmerMove { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
+@keyframes shineSweep { to { left:150%; } }
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+
+.es-card { animation: fadeInUp .45s cubic-bezier(.2,.8,.2,1) both; transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+.es-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,.10); border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); }
+.es-btn { transition: transform .15s ease, box-shadow .2s ease, filter .2s ease; position:relative; overflow:hidden; }
+.es-btn:hover { transform: translateY(-1px); filter: brightness(1.04); }
+.es-btn:active { transform: scale(.96); }
+.es-btn-primary::after { content:""; position:absolute; top:0; left:-60%; width:45%; height:100%; background:linear-gradient(120deg, transparent, rgba(255,255,255,.45), transparent); transform: skewX(-20deg); pointer-events:none; }
+.es-btn-primary:hover::after { animation: shineSweep .75s ease; }
+.es-chip { transition: transform .15s ease, background .2s, color .2s, border-color .2s; }
+.es-chip:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); }
+.grad-accent { background-size: 200% 200%; animation: gradientMove 7s ease infinite; }
+.es-shimmer { background: linear-gradient(90deg, var(--surface2) 25%, color-mix(in srgb, var(--surface2) 55%, #fff) 37%, var(--surface2) 63%); background-size: 200% 100%; animation: shimmerMove 1.3s infinite linear; }
+.float { animation: floaty 4s ease-in-out infinite; }
+.pulse-glow { animation: pulseGlow 2.2s ease-out infinite; }
+.pop { animation: popIn .3s ease both; }
+.es-input, .es-select, .es-cellinput { transition: border-color .2s, box-shadow .2s; }
+.es-input:focus, .es-select:focus, .es-cellinput:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); outline: none; }
+.es-table tbody tr { transition: background .18s; }
+.es-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.lift-img { transition: transform .5s ease; }
+.lift-img:hover { transform: scale(1.06); }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 .kpi { font-size:26px; font-weight:700; font-family:var(--font-head); }
 .es-divider { height:1px; background:var(--border); }
 .row-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:12px; margin-bottom:10px; }
@@ -223,6 +264,32 @@ const DEFAULT_TEMPLATE = {
 };
 
 /* ============================== APP ROOT ============================== */
+function TrialPopup() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const pop = () => setShow(true);
+    const t0 = setTimeout(pop, 3000);
+    const iv = setInterval(pop, 13000);
+    return () => { clearTimeout(t0); clearInterval(iv); };
+  }, []);
+  useEffect(() => { if (!show) return; const t = setTimeout(() => setShow(false), 9000); return () => clearTimeout(t); }, [show]);
+  if (!show) return null;
+  return (
+    <div className="no-print pop" style={{ position: "fixed", right: 16, bottom: 16, zIndex: 9999, width: 290, maxWidth: "86vw", background: "#fff", border: "1px solid var(--border)", borderLeft: "4px solid var(--accent)", borderRadius: 14, boxShadow: "0 12px 32px rgba(0,0,0,.18)", padding: "14px 14px 12px" }}>
+      <button onClick={() => setShow(false)} style={{ position: "absolute", top: 8, right: 8, background: "transparent", border: "none", cursor: "pointer", color: "var(--muted)", padding: 2 }}><X size={15} /></button>
+      <div style={{ fontWeight: 700, fontSize: 13, color: "var(--accent)", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}><Sparkles size={14} /> รุ่นทดลอง</div>
+      <div style={{ fontSize: 12.5, color: "var(--text)", lineHeight: 1.55, marginBottom: 8 }}>
+        เปิดใช้งานถึง <b>30 มิ.ย. 69</b> · สมัครแบบ <b>PRO</b> ใช้ได้ทุกฟังก์ชัน เพียง <b>159 บาท/เดือน</b>
+      </div>
+      <div style={{ fontSize: 13, marginBottom: 10, color: "var(--text)" }}>👉 สนใจ <b>แอดไลน์ : siin.nin</b></div>
+      <div style={{ display: "flex", gap: 8 }}>
+        <a href="https://line.me/ti/p/~siin.nin" target="_blank" rel="noopener noreferrer" className="es-btn es-btn-primary" style={{ flex: 1, justifyContent: "center", fontSize: 12.5, textDecoration: "none" }}>แอดไลน์ siin.nin</a>
+        <a href="tel:0924666665" className="es-btn" style={{ justifyContent: "center", fontSize: 12.5, textDecoration: "none" }}>โทร</a>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [themeKey, setThemeKey] = useState("cons");
   const [customTheme, setCustomTheme] = useState(clone(THEMES.cons));
@@ -236,13 +303,14 @@ export default function App() {
   const [suppliers, setSuppliers] = useState([]);
   const [team, setTeam] = useState([]);
   const [portfolio, setPortfolio] = useState([]);
-  const [activeProjectId, setActiveProjectId] = useState("p1");
+  const [biz, setBiz] = useState({});
+  const [activeProjectId, setActiveProjectId] = useState("siin-main");
   const [tab, setTab] = useState("ai");
   const [mobileNav, setMobileNav] = useState(false);
   const [clientMode, setClientMode] = useState(false);
 
   // ----- ระบบสมาชิก -----
-  const [user, setUser] = useState({ email: "", plan: "Member" });
+  const [user, setUser] = useState(null);
   const [accounts, setAccounts] = useState([{ email: "demo@cons.app", pass: "1234", plan: "Member", active: true }]);
   const [hydrated, setHydrated] = useState(false);
 
@@ -250,7 +318,10 @@ export default function App() {
   const loadUserData = async (email) => {
     const d = await store.get("cons:appdata:" + email);
     if (d) {
-      setProjects(d.projects?.length ? d.projects : clone(SAMPLE_PROJECTS));
+      let projs = d.projects?.length ? d.projects : clone(SAMPLE_PROJECTS);
+      projs = projs.filter((p) => !(!p.locked && p.name === "คาเฟ่ The Slow Bar ทองหล่อ" && (p.client?.company === "Slow Living Co., Ltd." || p.code === "BKK-2026-001")));
+      if (!projs.some((p) => p.locked)) projs = [clone(SAMPLE_PROJECTS)[0], ...projs];
+      setProjects(projs);
       setMaterials(d.materials || clone(SAMPLE_MATERIALS));
       setCompany(d.company || clone(COMPANY));
       setThemeKey(d.themeKey || "cons");
@@ -259,21 +330,24 @@ export default function App() {
       setTemplates(d.templates?.length ? d.templates : [DEFAULT_TEMPLATE]);
       setActiveTemplateId(d.activeTemplateId || "tpl-default");
       setContracts(d.contracts || []);
-      setSuppliers(d.suppliers || []); setTeam(d.team || []); setPortfolio(d.portfolio || []);
-      setActiveProjectId(d.projects?.[0]?.id || null);
+      setSuppliers(d.suppliers || []); setTeam(d.team || []); setPortfolio(d.portfolio || []); setBiz(d.biz || {});
+      setActiveProjectId(projs[0]?.id || null);
     } else {
       // ผู้ใช้ใหม่ — เริ่มด้วยตัวอย่างชุดสะอาด
       setProjects(clone(SAMPLE_PROJECTS)); setMaterials(clone(SAMPLE_MATERIALS)); setCompany(clone(COMPANY));
-      setTemplates([DEFAULT_TEMPLATE]); setContracts([]); setSuppliers([]); setTeam([]); setPortfolio([]); setActiveProjectId("p1");
+      setTemplates([DEFAULT_TEMPLATE]); setContracts([]); setSuppliers([]); setTeam([]); setPortfolio([]); setBiz({}); setActiveProjectId("siin-main");
     }
   };
 
   const handleLogin = async (acc) => { setUser(acc); await loadUserData(acc.email); };
-  const logout = () => { if (confirm("ล้างข้อมูลทั้งหมดในเครื่องนี้? (กู้คืนไม่ได้)")) { try { localStorage.clear(); } catch {} location.reload(); } };
+  const logout = () => { try { localStorage.removeItem("cons:guser"); if (window.google && window.google.accounts && window.google.accounts.id) window.google.accounts.id.disableAutoSelect(); } catch {} setUser(null); };
 
   // เริ่มต้น: โหลดบัญชี + session แล้วล็อกอินอัตโนมัติถ้าเคยล็อกอินไว้
   useEffect(() => {
-    (async () => { await loadUserData(""); setHydrated(true); })();
+    (async () => {
+      try { const g = JSON.parse(localStorage.getItem("cons:guser") || "null"); if (g && g.email) { setUser(g); await loadUserData(g.email); } } catch {}
+      setHydrated(true);
+    })();
   }, []);
 
   // บันทึกบัญชี / session
@@ -284,7 +358,7 @@ export default function App() {
   useEffect(() => {
     if (!hydrated || !user) return;
     const t = setTimeout(() => {
-      store.set("cons:appdata:" + user.email, { projects, materials, company, themeKey, customTheme, fontKey, templates, activeTemplateId, contracts, suppliers, team, portfolio });
+      store.set("cons:appdata:" + user.email, { projects, materials, company, themeKey, customTheme, fontKey, templates, activeTemplateId, contracts, suppliers, team, portfolio, biz });
     }, 500);
     return () => clearTimeout(t);
   }, [projects, materials, company, themeKey, customTheme, fontKey, templates, activeTemplateId, contracts, user, hydrated]);
@@ -301,7 +375,7 @@ export default function App() {
     theme, themeKey, setThemeKey, customTheme, setCustomTheme, font, fontKey, setFontKey,
     projects, setProjects, materials, setMaterials, company, setCompany,
     templates, setTemplates, activeTemplate, activeTemplateId, setActiveTemplateId,
-    contracts, setContracts, suppliers, setSuppliers, team, setTeam, portfolio, setPortfolio,
+    contracts, setContracts, suppliers, setSuppliers, team, setTeam, portfolio, setPortfolio, biz, setBiz,
     activeProject, activeProjectId, setActiveProjectId, updateProject,
     tab, setTab, clientMode, setClientMode,
     user, logout, DEFAULT_TEMPLATE,
@@ -315,18 +389,53 @@ export default function App() {
     "--font-body": font.body, "--font-head": font.head,
   };
 
-  const NAV = [
-    { k: "dashboard", icon: LayoutDashboard, label: "แดชบอร์ด" },
-    { k: "projects", icon: FolderKanban, label: "โปรเจกต์" },
-    { k: "boq", icon: Table2, label: "BOQ Editor" },
-    { k: "library", icon: Library, label: "คลังวัสดุ" },
-    { k: "templates", icon: Layers, label: "เทมเพลต PDF" },
-    { k: "contract", icon: PenLine, label: "ร่างสัญญา" },
-    { k: "schedule", icon: TrendingUp, label: "แผนงานก่อสร้าง" },
-    { k: "legal", icon: Shield, label: "คู่มือกฎหมาย" },
-    { k: "team", icon: User, label: "ทีม & ซัพพลายเออร์" },
-    { k: "ai", icon: Sparkles, label: "ผู้ช่วย AI" },
-    { k: "settings", icon: SettingsIcon, label: "ตั้งค่า/ธีม" },
+  const NAV_GROUPS = [
+    { g: "ภาพรวม", items: [
+      { k: "dashboard", icon: LayoutDashboard, label: "แดชบอร์ด" },
+      { k: "ai", icon: Sparkles, label: "ผู้ช่วย AI" },
+    ] },
+    { g: "ลูกค้า & งานขาย", items: [
+      { k: "clients", icon: User, label: "รายชื่อลูกค้า" },
+      { k: "leads", icon: Building2, label: "ลูกค้า (Leads)" },
+      { k: "brief", icon: PenLine, label: "บรีฟลูกค้า" },
+      { k: "projects", icon: FolderKanban, label: "โปรเจกต์" },
+      { k: "quotation", icon: FileDown, label: "ใบเสนอราคา" },
+      { k: "contract", icon: PenLine, label: "สัญญา" },
+    ] },
+    { g: "ออกแบบ", items: [
+      { k: "survey", icon: ScanLine, label: "สำรวจหน้างาน" },
+      { k: "library", icon: Library, label: "คลังวัสดุ" },
+      { k: "drawings", icon: Layers, label: "ชุดแบบ (Drawings)" },
+      { k: "imagestudio", icon: ImageIcon, label: "สตูดิโอภาพ AI" },
+      { k: "humandim", icon: Calculator, label: "ขนาดมาตรฐานมนุษย์" },
+      { k: "templates", icon: Layers, label: "เทมเพลต PDF" },
+    ] },
+    { g: "ประเมินราคา", items: [
+      { k: "boq", icon: Table2, label: "BOQ / ประเมินราคา" },
+    ] },
+    { g: "ก่อสร้าง", items: [
+      { k: "schedule", icon: TrendingUp, label: "แผนงาน (Timeline)" },
+      { k: "procurement", icon: Copy, label: "จัดซื้อ (Procurement)" },
+      { k: "daily", icon: Calculator, label: "รายงานหน้างาน" },
+      { k: "vo", icon: Wand2, label: "งานเพิ่ม-ลด (VO)" },
+      { k: "qc", icon: CheckCircle2, label: "QC / Punch List" },
+    ] },
+    { g: "การเงิน", items: [
+      { k: "payment", icon: Calculator, label: "เบิกงวด / Payment" },
+    ] },
+    { g: "ปิดงาน", items: [
+      { k: "handover", icon: CheckCircle2, label: "ส่งมอบงาน" },
+      { k: "warranty", icon: Shield, label: "รับประกัน / Service" },
+    ] },
+    { g: "ทีม & เอกสาร", items: [
+      { k: "team", icon: User, label: "ทีม & ซัพพลายเออร์" },
+      { k: "meeting", icon: User, label: "บันทึกประชุม" },
+      { k: "docs", icon: Library, label: "คลังเอกสาร" },
+      { k: "legal", icon: Shield, label: "คู่มือกฎหมาย" },
+    ] },
+    { g: "ตั้งค่า", items: [
+      { k: "settings", icon: SettingsIcon, label: "ตั้งค่า/ธีม" },
+    ] },
   ];
 
   if (!user) {
@@ -334,7 +443,7 @@ export default function App() {
       <>
         <style>{STYLE}</style>
         <div className="estima" style={cssVars}>
-          <AuthFlow accounts={accounts} setAccounts={setAccounts} onLogin={handleLogin} />
+          <GoogleLogin onLogin={(p) => { try { localStorage.setItem("cons:guser", JSON.stringify(p)); } catch {} handleLogin(p); }} />
         </div>
       </>
     );
@@ -343,29 +452,35 @@ export default function App() {
   return (
     <AppCtx.Provider value={ctx}>
       <style>{STYLE}</style>
+      <TrialPopup />
       <div className="estima" style={cssVars}>
         <div style={{ display: "flex", minHeight: "100vh" }}>
           {/* Sidebar (desktop) */}
           <aside className="no-print es-sidebar" style={{ width: 248, padding: 18, position: "sticky", top: 0, height: "100vh", display: "flex", flexDirection: "column", gap: 6 }}
             data-mobile-hide>
             <Brand />
-            <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 4 }}>
-              {NAV.map((n) => (
-                <div key={n.k} className={`es-nav ${tab === n.k ? "active" : ""}`} onClick={() => setTab(n.k)}>
-                  <n.icon size={18} /> {n.label}
+            <div style={{ marginTop: 8, flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 2 }}>
+              {NAV_GROUPS.map((grp) => (
+                <div key={grp.g} style={{ marginBottom: 4 }}>
+                  <div className="es-navhead">{grp.g}</div>
+                  {grp.items.map((n) => (
+                    <div key={n.k} className={`es-nav ${tab === n.k ? "active" : ""}`} onClick={() => setTab(n.k)}>
+                      <n.icon size={17} /> {n.label}
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
             <div style={{ marginTop: "auto", fontSize: 11, lineHeight: 1.6 }}>
               <div className="es-divider" style={{ marginBottom: 10 }} />
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                <div style={{ width: 30, height: 30, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, background: "color-mix(in srgb, var(--headText) 16%, transparent)", color: "var(--headText)" }}>"C"</div>
+                <div style={{ width: 30, height: 30, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, background: "rgba(31,110,68,.12)", color: "#1f6e44" }}>{(user?.email || "U")[0].toUpperCase()}</div>
                 <div style={{ minWidth: 0 }}>
-                  <div style={{ color: "var(--headText)", fontWeight: 600, fontSize: 12, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>CONS Studio</div>
-                  <div className="es-pill" style={{ background: "var(--accent)", color: "#fff", fontSize: 10 }}>บันทึกอัตโนมัติในเครื่อง</div>
+                  <div style={{ color: "#1a1a1a", fontWeight: 600, fontSize: 12, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{user?.email}</div>
+                  <div className="es-pill" style={{ background: "var(--accent)", color: "#fff", fontSize: 10 }}>สมาชิก {user?.plan || "Member"}</div>
                 </div>
               </div>
-              <button className="es-btn" style={{ width: "100%", justifyContent: "center", fontSize: 12, padding: "8px", background: "color-mix(in srgb, var(--headText) 12%, transparent)", color: "var(--headText)", border: "1px solid color-mix(in srgb, var(--headText) 22%, transparent)" }} onClick={logout}>ล้างข้อมูลทั้งหมด</button>
+              <button className="es-btn" style={{ width: "100%", justifyContent: "center", fontSize: 12, padding: "8px", background: "#f1f4f1", color: "#1a1a1a", border: "1px solid #e6eae7" }} onClick={logout}>ออกจากระบบ</button>
             </div>
           </aside>
 
@@ -374,10 +489,15 @@ export default function App() {
             <div className="es-modal-bg no-print" onClick={() => setMobileNav(false)}>
               <aside className="es-sidebar" style={{ width: 240, height: "100vh", position: "absolute", left: 0, top: 0, padding: 18 }} onClick={(e) => e.stopPropagation()}>
                 <Brand />
-                <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 4 }}>
-                  {NAV.map((n) => (
-                    <div key={n.k} className={`es-nav ${tab === n.k ? "active" : ""}`} onClick={() => { setTab(n.k); setMobileNav(false); }}>
-                      <n.icon size={18} /> {n.label}
+                <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 2, height: "calc(100vh - 90px)", overflowY: "auto" }}>
+                  {NAV_GROUPS.map((grp) => (
+                    <div key={grp.g} style={{ marginBottom: 4 }}>
+                      <div className="es-navhead">{grp.g}</div>
+                      {grp.items.map((n) => (
+                        <div key={n.k} className={`es-nav ${tab === n.k ? "active" : ""}`} onClick={() => { setTab(n.k); setMobileNav(false); }}>
+                          <n.icon size={17} /> {n.label}
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
@@ -398,6 +518,23 @@ export default function App() {
               {tab === "schedule" && (activeProject ? <ScheduleStudio /> : <EmptyProject />)}
               {tab === "legal" && <LegalLibrary />}
               {tab === "team" && <TeamStudio />}
+              {tab === "leads" && <RecordModule id="leads" />}
+              {tab === "brief" && <RecordModule id="brief" />}
+              {tab === "survey" && <RecordModule id="survey" />}
+              {tab === "drawings" && <RecordModule id="drawings" />}
+              {tab === "procurement" && <RecordModule id="procurement" />}
+              {tab === "daily" && <RecordModule id="daily" />}
+              {tab === "vo" && <RecordModule id="vo" />}
+              {tab === "qc" && <RecordModule id="qc" />}
+              {tab === "payment" && <RecordModule id="payment" />}
+              {tab === "handover" && <RecordModule id="handover" />}
+              {tab === "warranty" && <RecordModule id="warranty" />}
+              {tab === "meeting" && <RecordModule id="meeting" />}
+              {tab === "docs" && <RecordModule id="docs" />}
+              {tab === "clients" && <ClientsPage />}
+              {tab === "quotation" && <QuotationPage />}
+              {tab === "imagestudio" && <ImageStudio />}
+              {tab === "humandim" && <HumanDim />}
               {tab === "ai" && <AIStudio />}
               {tab === "settings" && <SettingsPage />}
             </div>
@@ -405,6 +542,58 @@ export default function App() {
         </div>
       </div>
     </AppCtx.Provider>
+  );
+}
+
+const CONS_LOGIN_LOGO = "/logo.png";
+function GoogleLogin({ onLogin }) {
+  const ENVID = (typeof process !== "undefined" && process.env && process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID) || "";
+  const [clientId, setClientId] = useState(() => (typeof window !== "undefined" && localStorage.getItem("cons:gclient")) || ENVID || "");
+  const [cidInput, setCidInput] = useState("");
+  const [ready, setReady] = useState(false);
+  const btnRef = useRef(null);
+  const decode = (t) => { try { return JSON.parse(decodeURIComponent(escape(atob((t.split(".")[1] || "").replace(/-/g, "+").replace(/_/g, "/"))))); } catch { return {}; } };
+  useEffect(() => {
+    if (!clientId) return;
+    let n = 0;
+    const iv = setInterval(() => {
+      n++;
+      if (window.google && window.google.accounts && window.google.accounts.id) {
+        clearInterval(iv);
+        try {
+          window.google.accounts.id.initialize({ client_id: clientId, callback: (resp) => { const p = decode(resp.credential); if (p && p.email) onLogin({ email: p.email, name: p.name || p.email, picture: p.picture || "", plan: "Member" }); } });
+          if (btnRef.current) window.google.accounts.id.renderButton(btnRef.current, { theme: "outline", size: "large", width: 280, text: "signin_with", shape: "pill" });
+          setReady(true);
+        } catch (e) {}
+      }
+      if (n > 30) clearInterval(iv);
+    }, 200);
+    return () => clearInterval(iv);
+  }, [clientId]);
+  const saveCid = () => { const v = cidInput.trim(); if (!v) return; try { localStorage.setItem("cons:gclient", v); } catch {} setClientId(v); };
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 20, background: "var(--bg)" }}>
+      <div className="es-card" style={{ padding: 32, maxWidth: 410, width: "100%", textAlign: "center" }}>
+        <img className="float" src={CONS_LOGIN_LOGO} alt="CONS" style={{ width: 104, height: 104, borderRadius: 20, marginBottom: 16, boxShadow: "0 10px 28px rgba(22,36,27,.28)" }} />
+        <h2 style={{ margin: "0 0 4px", letterSpacing: 1 }}>CONS</h2>
+        <p style={{ color: "var(--muted)", marginTop: 0, fontSize: 13 }}>ระบบบริหารงานออกแบบ & ก่อสร้างครบวงจร</p>
+        {clientId ? (
+          <div style={{ marginTop: 22, display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+            <div ref={btnRef} />
+            {!ready && <div style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>กำลังโหลดปุ่ม Google...</div>}
+            <button className="es-btn es-btn-ghost" style={{ fontSize: 11 }} onClick={() => onLogin({ email: "guest@local", name: "ผู้ใช้ทดลอง", plan: "Member" })}>เข้าใช้แบบทดลอง</button>
+          </div>
+        ) : (
+          <div style={{ marginTop: 18, textAlign: "left" }}>
+            <div style={{ fontSize: 12.5, color: "var(--muted)", lineHeight: 1.7, marginBottom: 10 }}>ตั้ง <b>NEXT_PUBLIC_GOOGLE_CLIENT_ID</b> บน Vercel เพื่อเปิดล็อกอิน Gmail · หรือวางชั่วคราวด้านล่าง</div>
+            <input className="es-input" placeholder="xxxxx.apps.googleusercontent.com" value={cidInput} onChange={(e) => setCidInput(e.target.value)} style={{ marginBottom: 8 }} />
+            <button className="es-btn es-btn-primary" style={{ width: "100%", justifyContent: "center", marginBottom: 8 }} onClick={saveCid}>บันทึก & เปิดล็อกอิน</button>
+            <button className="es-btn" style={{ width: "100%", justifyContent: "center" }} onClick={() => onLogin({ email: "guest@local", name: "ผู้ใช้ทดลอง", plan: "Member" })}>เข้าใช้แบบทดลอง</button>
+          </div>
+        )}
+        <p style={{ fontSize: 10.5, color: "var(--muted)", marginTop: 16, lineHeight: 1.5 }}>ข้อมูลของแต่ละ Gmail แยกกัน บันทึกอัตโนมัติ</p>
+      </div>
+    </div>
   );
 }
 
@@ -535,8 +724,8 @@ function Brand() {
   const { company } = useApp();
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
-      <div style={{ width: 42, height: 42, borderRadius: 11, overflow: "hidden", flexShrink: 0, border: "1px solid rgba(255,255,255,.15)" }}>
-        <img src={company.logo || CONS_LOGO} alt="CONS" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      <div style={{ width: 42, height: 42, borderRadius: 11, overflow: "hidden", flexShrink: 0, border: "1px solid rgba(0,0,0,.08)" }}>
+        <img src={company.logo || CONS_LOGIN_LOGO} alt="CONS" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
       </div>
       <div>
         <div className="head" style={{ fontWeight: 800, fontSize: 18, lineHeight: 1, letterSpacing: 2 }}>CONS</div>
@@ -546,16 +735,153 @@ function Brand() {
   );
 }
 
+function makeProject({ name, client = "", type = "บ้าน", budget = 0 }, count = 0) {
+  return {
+    id: uid(), code: "BKK-" + new Date().getFullYear() + "-" + String(count + 1).padStart(3, "0"),
+    name, type, style: "", area: 0, budget: +budget || 0, tier: "กลาง", province: "", location: "",
+    status: "ร่าง", startDate: new Date().toISOString().slice(0, 10), updatedAt: new Date().toISOString().slice(0, 10),
+    client: { name: client || "", company: "", address: "", phone: "", email: "", taxId: "", contact: client || "", position: "", note: "" },
+    settings: { vatEnabled: true, vatPct: 7, whtPct: 3, defWaste: 5, defCommission: 3, defOverhead: 8, defProfit: 15, rounding: 0, vatMode: "exclusive" },
+    sections: [{ id: uid(), title: "งานทั่วไป", color: "#2f6f4f", rows: [] }],
+  };
+}
+
+function ClientsPage() {
+  const { projects, setProjects, activeProjectId, setActiveProjectId, setTab } = useApp();
+  const [showNew, setShowNew] = useState(false);
+  const [q, setQ] = useState("");
+  const list = q ? projects.filter((p) => ((p.client?.name || "") + " " + p.name + " " + (p.client?.company || "")).toLowerCase().includes(q.toLowerCase())) : projects;
+  const updName = (id, v) => setProjects((ps) => ps.map((p) => p.id === id ? { ...p, name: v, client: { ...p.client, name: v, contact: v } } : p));
+  const updCompany = (id, v) => setProjects((ps) => ps.map((p) => p.id === id ? { ...p, client: { ...p.client, company: v } } : p));
+  const updPhone = (id, v) => setProjects((ps) => ps.map((p) => p.id === id ? { ...p, client: { ...p.client, phone: v } } : p));
+  const updBudget = (id, v) => setProjects((ps) => ps.map((p) => p.id === id ? { ...p, budget: v === "" ? "" : +v } : p));
+  const del = (id) => { const p = projects.find((x) => x.id === id); if (p?.locked) { alert("ลูกค้าหลักนี้ลบไม่ได้"); return; } if (confirm("ลบลูกค้านี้และข้อมูลโปรเจกต์ทั้งหมด? (กู้คืนไม่ได้)")) setProjects((ps) => ps.filter((x) => x.id !== id)); };
+  const create = ({ name, client, type }) => { setProjects((ps) => [makeProject({ name, client, type }, ps.length), ...ps]); setShowNew(false); };
+  return (
+    <div>
+      <SectionHead title="รายชื่อลูกค้า" sub={`${projects.length} ราย · เพิ่ม/ลบได้ตลอด · เลือกแล้วทุกหมวดผูกตาม`}
+        action={<button className="es-btn es-btn-primary" onClick={() => setShowNew(true)}><Plus size={16} /> เพิ่มลูกค้า</button>} />
+      <div style={{ position: "relative", marginBottom: 16, maxWidth: 340 }}>
+        <Search size={16} style={{ position: "absolute", left: 11, top: 11, color: "var(--muted)" }} />
+        <input className="es-input" style={{ paddingLeft: 34 }} placeholder="ค้นหาลูกค้า / บริษัท" value={q} onChange={(e) => setQ(e.target.value)} />
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(320px,1fr))", gap: 14 }}>
+        {list.map((p) => (
+          <div key={p.id} className="es-card" style={{ padding: 16, position: "relative", border: activeProjectId === p.id ? "2px solid var(--accent)" : undefined }}>
+            <div style={{ position: "absolute", top: 10, right: 10 }}>
+              {p.locked
+                ? <span title="ลูกค้าหลัก ลบไม่ได้" style={{ fontSize: 11, color: "var(--accent)", fontWeight: 700, display: "flex", alignItems: "center", gap: 3 }}><Shield size={13} /> หลัก</span>
+                : <button className="es-btn es-btn-ghost es-btn-danger" style={{ padding: 5, border: "none" }} onClick={() => del(p.id)}><Trash2 size={14} /></button>}
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+              <div style={{ width: 42, height: 42, borderRadius: 12, flexShrink: 0, background: "color-mix(in srgb,var(--accent) 14%,transparent)", color: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 18 }}>{((p.client?.name || p.name || "?").trim()[0] || "?")}</div>
+              <input className="es-cellinput l" value={p.name} onChange={(e) => updName(p.id, e.target.value)} style={{ fontWeight: 700, fontSize: 15, flex: 1, minWidth: 0 }} />
+            </div>
+            <label className="es-label" style={{ marginBottom: 2 }}>บริษัท / แบรนด์</label>
+            <input className="es-input" value={p.client?.company || ""} onChange={(e) => updCompany(p.id, e.target.value)} placeholder="—" style={{ marginBottom: 8 }} />
+            <div style={{ display: "flex", gap: 8 }}>
+              <div style={{ flex: 1 }}>
+                <label className="es-label" style={{ marginBottom: 2 }}>โทร / Line</label>
+                <input className="es-input" value={p.client?.phone || ""} onChange={(e) => updPhone(p.id, e.target.value)} placeholder="—" />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label className="es-label" style={{ marginBottom: 2 }}>ราคาจ้างงาน (บาท)</label>
+                <input className="es-input" type="number" value={p.budget ?? ""} onChange={(e) => updBudget(p.id, e.target.value)} />
+              </div>
+            </div>
+            <button className="es-btn es-btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 12 }} onClick={() => { setActiveProjectId(p.id); setTab("boq"); }}>เลือกลูกค้านี้ & เปิดงาน</button>
+          </div>
+        ))}
+      </div>
+      {showNew && <QuickNewProject onClose={() => setShowNew(false)} onCreate={create} />}
+    </div>
+  );
+}
+
+function QuickNewProject({ onClose, onCreate }) {
+  const [name, setName] = useState("");
+  const [client, setClient] = useState("");
+  const [type, setType] = useState("บ้าน");
+  const TYPES = ["บ้าน", "คอนโด", "คาเฟ่", "คลินิก", "ร้านอาหาร", "ออฟฟิศ", "โรงแรม", "บูธ", "อื่นๆ"];
+  const submit = () => { if (!name.trim()) { alert("กรุณาใส่ชื่อโปรเจกต์/งาน"); return; } onCreate({ name: name.trim(), client: client.trim(), type }); };
+  return (
+    <div className="es-modal-bg" onClick={onClose}>
+      <div className="es-card pop" style={{ padding: 24, maxWidth: 420, width: "100%" }} onClick={(e) => e.stopPropagation()}>
+        <h3 style={{ marginTop: 0 }}>สร้างลูกค้า / โปรเจกต์ใหม่</h3>
+        <label className="es-label">ชื่อโปรเจกต์ / งาน</label>
+        <input className="es-input" value={name} onChange={(e) => setName(e.target.value)} placeholder="เช่น บ้านคุณสมชาย / ร้านอาหาร ABC" style={{ marginBottom: 10 }} autoFocus />
+        <label className="es-label">ชื่อลูกค้า</label>
+        <input className="es-input" value={client} onChange={(e) => setClient(e.target.value)} placeholder="เช่น คุณนภัสสร วงศ์ไพศาล" style={{ marginBottom: 10 }} />
+        <label className="es-label">ประเภทงาน</label>
+        <select className="es-select" value={type} onChange={(e) => setType(e.target.value)} style={{ marginBottom: 18 }}>{TYPES.map((t) => <option key={t}>{t}</option>)}</select>
+        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+          <button className="es-btn" onClick={onClose}>ยกเลิก</button>
+          <button className="es-btn es-btn-primary" onClick={submit}><Plus size={16} /> สร้างและเลือก</button>
+        </div>
+        <p style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 12, marginBottom: 0 }}>สร้างแล้วทุกหมวด (BOQ, ใบเสนอราคา, สัญญา, รายงาน ฯลฯ) จะผูกกับลูกค้านี้อัตโนมัติ · รายละเอียดเพิ่มเติมแก้ได้ในเมนูโปรเจกต์</p>
+      </div>
+    </div>
+  );
+}
+
+function ProjectPicker() {
+  const { projects, activeProject, setActiveProjectId, setProjects } = useApp();
+  const [open, setOpen] = useState(false);
+  const [q, setQ] = useState("");
+  const [showNew, setShowNew] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    const h = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+  const list = q ? projects.filter((p) => (p.name + " " + (p.client?.name || "")).toLowerCase().includes(q.toLowerCase())) : projects;
+  const create = ({ name, client, type }) => {
+    const p = makeProject({ name, client, type }, projects.length);
+    setProjects((ps) => [p, ...ps]);
+    setActiveProjectId(p.id);
+    setShowNew(false); setOpen(false);
+  };
+  return (
+    <div ref={ref} style={{ position: "relative", minWidth: 0 }}>
+      <div style={{ fontSize: 11, color: "var(--muted)" }}>โปรเจกต์/ลูกค้าปัจจุบัน (เชื่อมทุกหมวด)</div>
+      <button onClick={() => setOpen((o) => !o)} style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "none", padding: "1px 2px", cursor: "pointer", maxWidth: 320 }}>
+        <span className="head" style={{ fontWeight: 700, fontSize: 15, color: "var(--text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          {activeProject ? activeProject.name + (activeProject.client?.name ? " · " + activeProject.client.name : "") : "ยังไม่มีโปรเจกต์ — สร้างใหม่"}
+        </span>
+        <ChevronDown size={16} style={{ flexShrink: 0, color: "var(--muted)" }} />
+      </button>
+      {open && (
+        <div className="es-card" style={{ position: "absolute", top: "100%", left: 0, marginTop: 6, width: 330, maxWidth: "86vw", zIndex: 50, padding: 8, boxShadow: "0 12px 32px rgba(0,0,0,.16)", maxHeight: 440, overflow: "auto" }}>
+          <div style={{ position: "relative", marginBottom: 6 }}>
+            <Search size={15} style={{ position: "absolute", left: 10, top: 10, color: "var(--muted)" }} />
+            <input className="es-input" style={{ paddingLeft: 32, fontSize: 13 }} placeholder="ค้นหาลูกค้า / งาน" value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
+          </div>
+          {list.map((p) => (
+            <div key={p.id} className="es-navrow" onClick={() => { setActiveProjectId(p.id); setOpen(false); }}
+              style={{ padding: "9px 10px", borderRadius: 9, cursor: "pointer", display: "flex", flexDirection: "column", gap: 1, background: activeProject?.id === p.id ? "color-mix(in srgb,var(--accent) 12%,transparent)" : "transparent" }}>
+              <span style={{ fontWeight: 600, fontSize: 13.5 }}>{p.name}</span>
+              <span style={{ fontSize: 11.5, color: "var(--muted)" }}>{p.client?.name || "ไม่ระบุลูกค้า"} · {p.type}</span>
+            </div>
+          ))}
+          {list.length === 0 && <div style={{ padding: 12, color: "var(--muted)", fontSize: 13, textAlign: "center" }}>ไม่พบ — สร้างใหม่ด้านล่าง</div>}
+          <div className="es-divider" style={{ margin: "8px 4px" }} />
+          <button className="es-btn es-btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={() => setShowNew(true)}><Plus size={16} /> สร้างลูกค้า/โปรเจกต์ใหม่</button>
+        </div>
+      )}
+      {showNew && <QuickNewProject onClose={() => setShowNew(false)} onCreate={create} />}
+    </div>
+  );
+}
+
 function TopBar({ onMenu }) {
-  const { activeProject, clientMode, setClientMode, setTab } = useApp();
+  const { activeProject, activeProjectId, setActiveProjectId, projects, clientMode, setClientMode, setTab } = useApp();
   return (
     <div className="no-print" style={{ position: "sticky", top: 0, zIndex: 10, background: "color-mix(in srgb, var(--bg) 85%, transparent)", backdropFilter: "blur(8px)", borderBottom: "1px solid var(--border)", padding: "12px 22px", display: "flex", alignItems: "center", gap: 12 }}>
       <button className="es-btn es-btn-ghost" onClick={onMenu} style={{ padding: 8 }} data-mobile-only><Menu size={18} /></button>
-      <div style={{ minWidth: 0 }}>
-        <div style={{ fontSize: 12, color: "var(--muted)" }}>โปรเจกต์ปัจจุบัน</div>
-        <div className="head" style={{ fontWeight: 700, fontSize: 15, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-          {activeProject ? activeProject.name : "ยังไม่ได้เลือกโปรเจกต์"}
-        </div>
+      <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 8 }}>
+        <FolderKanban size={18} style={{ color: "var(--accent)", flexShrink: 0 }} />
+        <ProjectPicker />
       </div>
       <div style={{ marginLeft: "auto", display: "flex", gap: 8, alignItems: "center" }}>
         <button className={`es-btn ${clientMode ? "es-btn-primary" : "es-btn-ghost"}`} onClick={() => setClientMode((v) => !v)} title="ซ่อนต้นทุนจริง แสดงเฉพาะราคาขาย">
@@ -680,7 +1006,7 @@ function Projects() {
     setActiveProjectId(p.id); setTab("boq"); setShowNew(false);
   };
   const duplicate = (p) => setProjects((ps) => [{ ...JSON.parse(JSON.stringify(p)), id: uid(), name: p.name + " (สำเนา)", code: p.code + "-C", status: "ร่าง" }, ...ps]);
-  const remove = (id) => { if (confirm("ยืนยันลบโปรเจกต์นี้?")) setProjects((ps) => ps.filter((p) => p.id !== id)); };
+  const remove = (id) => { const t = projects.find((x) => x.id === id); if (t?.locked) { alert("ลูกค้าหลักนี้ลบไม่ได้"); return; } if (confirm("ยืนยันลบโปรเจกต์นี้?")) setProjects((ps) => ps.filter((p) => p.id !== id)); };
 
   return (
     <div>
@@ -908,7 +1234,7 @@ function SectionBlock({ sec, search, isMobile, clientMode, updateRow, addRow, de
                     return (
                       <tr key={r.id}>
                         <td>{i + 1}</td>
-                        <td><RowImage value={r.image} onChange={(v) => updateRow(sec.id, r.id, { image: v })} /></td>
+                        <td><RowImage value={r.image} onChange={(v) => updateRow(sec.id, r.id, { image: v })} size={80} /></td>
                         <td className="l"><input className="es-cellinput l" value={r.name} placeholder="ชื่อรายการ" onChange={(e) => updateRow(sec.id, r.id, { name: e.target.value })} /></td>
                         <td className="l"><input className="es-cellinput l" value={r.spec} placeholder="ยี่ห้อ/รุ่น" onChange={(e) => updateRow(sec.id, r.id, { spec: e.target.value })} /></td>
                         <td><input className="es-cellinput" type="number" value={r.qty} onChange={(e) => updateRow(sec.id, r.id, { qty: +e.target.value })} /></td>
@@ -945,6 +1271,48 @@ function SectionBlock({ sec, search, isMobile, clientMode, updateRow, addRow, de
           </div>
         </>
       )}
+    </div>
+  );
+}
+
+// สร้างภาพ tile ในเครื่อง (ไล่สีจากชื่อ + ป้ายชื่อ) — ขึ้นทันทีเสมอ ไม่ต้องพึ่งเน็ต
+function hashHue(s) { let h = 0; for (let i = 0; i < (s || "").length; i++) h = s.charCodeAt(i) + ((h << 5) - h); return Math.abs(h) % 360; }
+function escXml(s) { return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function localThumb(name) {
+  const h = hashHue(name || "x");
+  const label = escXml((name || "วัสดุ").slice(0, 20));
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='hsl(${h},48%,56%)'/><stop offset='1' stop-color='hsl(${(h + 45) % 360},52%,36%)'/></linearGradient></defs><rect width='400' height='400' fill='url(#g)'/><circle cx='200' cy='150' r='52' fill='rgba(255,255,255,.18)'/><text x='200' y='162' font-size='44' text-anchor='middle' fill='rgba(255,255,255,.9)'>🎨</text><text x='200' y='250' font-size='24' font-family='sans-serif' font-weight='bold' fill='#fff' text-anchor='middle'>${label}</text></svg>`;
+  return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+}
+
+// ค้นรูปถ่ายจริงจาก Pexels (ฟรี ถูกกฎหมาย) ถ้าผู้ใช้ใส่คีย์ไว้
+const _imgCache = {};
+async function pexelsLookup(q) {
+  if (!q) return null;
+  if (q in _imgCache) return _imgCache[q];
+  try {
+    const r = await fetch("/api/img?q=" + encodeURIComponent(q));
+    const d = await r.json();
+    const url = d.url || null;
+    _imgCache[q] = url; return url;
+  } catch { _imgCache[q] = null; return null; }
+}
+
+// รูปอัจฉริยะ: โชว์ tile ทันที → ลองรูปจริง Pexels → ถ้าไม่มีคีย์ลองรูป AI → คงไว้ที่ tile ถ้าโหลดไม่ได้
+function SmartImg({ src, desc, q, style, className }) {
+  const [cur, setCur] = useState(() => localThumb(desc));
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      let target = await pexelsLookup(q || desc);
+      if (!target) target = src;
+      if (target) { const im = new Image(); im.onload = () => { if (alive) setCur(target); }; im.src = target; }
+    })();
+    return () => { alive = false; };
+  }, [src, desc, q]);
+  return (
+    <div style={{ position: "relative", overflow: "hidden", background: "var(--surface2)", ...style }}>
+      <img src={cur} alt={desc || ""} className={"lift-img " + (className || "")} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
     </div>
   );
 }
@@ -1001,7 +1369,7 @@ function RowCard({ r, idx, sec, updateRow, delRow, dupRow, clientMode }) {
     <div className="row-card">
       <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 8 }}>
         <span className="es-pill" style={{ background: "var(--surface2)", color: "var(--muted)" }}>#{idx}</span>
-        <RowImage value={r.image} onChange={(v) => u({ image: v })} size={34} />
+        <RowImage value={r.image} onChange={(v) => u({ image: v })} size={68} />
         <input className="es-cellinput l" style={{ fontWeight: 600, flex: 1 }} value={r.name} placeholder="ชื่อรายการ" onChange={(e) => u({ name: e.target.value })} />
       </div>
       <input className="es-cellinput l" style={{ marginBottom: 8, color: "var(--muted)", fontSize: 12 }} value={r.spec} placeholder="สเปก/ยี่ห้อ" onChange={(e) => u({ spec: e.target.value })} />
@@ -1031,7 +1399,7 @@ function SummaryPanel({ totals, project, clientMode }) {
   const health = boqHealth(project);
   return (
     <div style={{ position: "sticky", top: 80, display: "flex", flexDirection: "column", gap: 12 }}>
-      <div className="es-card" style={{ padding: 16 }}>
+      <div className="es-card es-greenpanel" style={{ padding: 16 }}>
         <h3 style={{ margin: "0 0 12px", fontSize: 15, display: "flex", alignItems: "center", gap: 6 }}><Calculator size={16} /> สรุปราคา</h3>
         {!clientMode && <Line k="ค่าวัสดุรวม" v={t.sumMaterial} />}
         {!clientMode && <Line k="ค่าแรงรวม" v={t.sumLabor} />}
@@ -1047,7 +1415,7 @@ function SummaryPanel({ totals, project, clientMode }) {
         <div className="es-divider" style={{ margin: "8px 0" }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ fontWeight: 700 }}>ยอดสุทธิ</span>
-          <span className="head" style={{ fontWeight: 800, fontSize: 20, color: "var(--accent)" }}>{baht(t.net)} ฿</span>
+          <span className="head es-netred" style={{ fontWeight: 800, fontSize: 20 }}>{baht(t.net)} ฿</span>
         </div>
       </div>
 
@@ -1223,7 +1591,7 @@ function MaterialLibrary() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 12 }}>
         {filtered.map((m) => (
           <div key={m.id} className="es-card" style={{ padding: 14 }}>
-            {m.image && <img src={m.image} alt={m.name} loading="lazy" style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", borderRadius: 9, marginBottom: 10 }} />}
+            <SmartImg src={m.image} desc={m.name + " " + (m.cat || "")} q={m.imgq || m.cat} style={{ width: "100%", aspectRatio: "16/9", borderRadius: 9, marginBottom: 10 }} />
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span className="es-pill" style={{ background: "var(--surface2)", color: "var(--muted)" }}>{m.cat.replace("งาน", "")}</span>
               <button className="es-btn es-btn-ghost es-btn-danger" style={{ padding: 4, border: "none" }} onClick={() => remove(m.id)}><Trash2 size={14} /></button>
@@ -1278,7 +1646,7 @@ function GenMaterialsModal({ onClose, onAdd }) {
   };
 
   const addAll = () => {
-    const list = preview.map((it) => ({ id: uid(), name: it.name + (it.size ? " (" + it.size + ")" : ""), cat, brand: it.brand || "", unit: it.unit || "แผ่น", low: it.low, mid: it.mid, high: it.high, labor: it.labor || 0, supplier: "AI", tag: cat, image: it.image }));
+    const list = preview.map((it) => ({ id: uid(), name: it.name + (it.size ? " (" + it.size + ")" : ""), cat, brand: it.brand || "", unit: it.unit || "แผ่น", low: it.low, mid: it.mid, high: it.high, labor: it.labor || 0, supplier: "AI", tag: cat, image: it.image, imgq: it.imageDesc }));
     onAdd(list); onClose();
   };
 
@@ -1314,7 +1682,7 @@ function GenMaterialsModal({ onClose, onAdd }) {
             <div style={{ maxHeight: 280, overflow: "auto" }}>
               {preview.map((it, i) => (
                 <div key={i} style={{ display: "flex", gap: 10, alignItems: "center", padding: "6px 0", borderBottom: "1px solid var(--border)", fontSize: 13 }}>
-                  <img src={it.image} loading="lazy" style={{ width: 36, height: 36, borderRadius: 6, objectFit: "cover", flexShrink: 0 }} />
+                  <SmartImg src={it.image} desc={it.name} q={it.imageDesc} style={{ width: 36, height: 36, borderRadius: 6, flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{it.name}</div><div style={{ color: "var(--muted)", fontSize: 11 }}>{it.brand} · {it.size}</div></div>
                   <div style={{ textAlign: "right", whiteSpace: "nowrap" }}><strong>{baht(it.mid)}</strong> ฿/{it.unit}</div>
                 </div>
@@ -1386,7 +1754,8 @@ const AI_STARTERS = [
 const AI_FOLLOWUPS = ["ขอเกรดพรีเมียมกว่านี้", "ขอตัวเลือกประหยัด", "เทียบ 3 ยี่ห้อ", "รวมค่าติดตั้งด้วย", "ขนาดมาตรฐานมีอะไรบ้าง"];
 
 function aiImg(desc) {
-  return "https://image.pollinations.ai/prompt/" + encodeURIComponent((desc || "interior furniture") + ", realistic high quality product photo, sharp focus, detailed, studio lighting, 4k") + "?width=768&height=768&model=flux&nologo=true&enhance=true";
+  const p = encodeURIComponent((desc || "interior furniture") + ", realistic product photo, clean studio background, sharp focus, detailed");
+  return "https://image.pollinations.ai/prompt/" + p + "?width=512&height=512&model=turbo&nologo=true";
 }
 
 function AIChat() {
@@ -1430,7 +1799,7 @@ function AIChat() {
     setAdded((a) => ({ ...a, [key]: (a[key] || "") + "b" }));
   };
   const addLib = (it, key) => {
-    setMaterials((ms) => [{ id: uid(), name: it.name, cat: it.cat || "งานตกแต่งเฉพาะทาง", brand: it.spec || "", unit: it.unit, low: it.matLow, mid: it.matMid, high: it.matHigh, labor: it.labor, supplier: "AI", tag: "chat", image: it.image }, ...ms]);
+    setMaterials((ms) => [{ id: uid(), name: it.name, cat: it.cat || "งานตกแต่งเฉพาะทาง", brand: it.spec || "", unit: it.unit, low: it.matLow, mid: it.matMid, high: it.matHigh, labor: it.labor, supplier: "AI", tag: "chat", image: it.image, imgq: it.imageDesc }, ...ms]);
     setAdded((a) => ({ ...a, [key]: (a[key] || "") + "l" }));
   };
 
@@ -1442,7 +1811,7 @@ function AIChat() {
       <div ref={scrollRef} style={{ flex: 1, overflow: "auto", padding: "4px 2px" }}>
         {messages.length === 0 && (
           <div style={{ textAlign: "center", padding: "24px 12px", color: "var(--muted)" }}>
-            <div className="grad-accent" style={{ width: 56, height: 56, borderRadius: 16, color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}><Sparkles size={26} /></div>
+            <div className="grad-accent float pulse-glow" style={{ width: 56, height: 56, borderRadius: 16, color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}><Sparkles size={26} /></div>
             <div style={{ fontSize: 18, fontWeight: 800, color: "var(--text)" }}>ถามราคาวัสดุหรือเฟอร์นิเจอร์</div>
             <div style={{ fontSize: 13, marginBottom: 18 }}>พิมพ์สิ่งที่อยากรู้ราคา เดี๋ยว AI ประเมินให้พร้อมรูปและบันทึกเข้าคลังได้</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", maxWidth: 560, margin: "0 auto" }}>
@@ -1467,10 +1836,8 @@ function AIChat() {
                     {m.items.map((it, j) => {
                       const key = i + "-" + j;
                       return (
-                        <div key={j} className="es-card" style={{ overflow: "hidden" }}>
-                          <div style={{ aspectRatio: "1/1", background: "var(--surface2)" }}>
-                            <img src={it.image} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { e.currentTarget.style.opacity = .25; }} />
-                          </div>
+                        <div key={j} className="es-card pop" style={{ overflow: "hidden" }}>
+                          <SmartImg src={it.image} desc={it.name} q={it.imageDesc} style={{ aspectRatio: "1/1" }} />
                           <div style={{ padding: 11 }}>
                             <div style={{ fontWeight: 700, fontSize: 13.5 }}>{it.name} <ConfPill c={it.confidence} /></div>
                             <div style={{ fontSize: 11.5, color: "var(--muted)", marginBottom: 6 }}>{it.spec}</div>
@@ -1512,18 +1879,19 @@ function AIChat() {
           <textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }} placeholder="พิมพ์วัสดุหรือเฟอร์ที่อยากรู้ราคา..." rows={1} style={{ flex: 1, border: "none", outline: "none", resize: "none", background: "transparent", fontFamily: "var(--font-body)", fontSize: 15, color: "var(--text)", maxHeight: 100, padding: "6px 0" }} />
           <button className="es-btn es-btn-primary" style={{ borderRadius: 16, padding: "10px 16px", flexShrink: 0 }} onClick={() => send()} disabled={loading}><Sparkles size={16} /></button>
         </div>
-        <div style={{ textAlign: "center", fontSize: 10.5, color: "var(--muted)", marginTop: 6 }}>ราคาเป็นการประเมินจาก AI ควรตรวจกับ supplier ก่อนใช้จริง</div>
+        <div style={{ textAlign: "center", fontSize: 10.5, color: "var(--muted)", marginTop: 6 }}>ราคาเป็นการประเมินจาก AI ควรตรวจกับ supplier ก่อนใช้จริง · ต้องตั้ง API Key ในเมนูตั้งค่า</div>
       </div>
     </>
   );
 }
 
 async function callClaude(prompt, system, image) {
-  const res = await fetch("/api/ai", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prompt, system, image }) });
+  const res = await fetch("/api/ai", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prompt, system, image: image || null }) });
   if (!res.ok) throw new Error("AI error " + res.status);
   const data = await res.json();
   if (data.error) throw new Error(data.error);
-  return JSON.parse((data.text || "").replace(/```json|```/g, "").trim());
+  const text = (data.text || "").replace(/```json|```/g, "").trim();
+  return JSON.parse(text);
 }
 
 const AI_SYS = `คุณคือผู้เชี่ยวชาญประเมินราคางานตกแต่งภายในในประเทศไทย ตอบเป็น JSON เท่านั้น ไม่มีคำอธิบายนอก JSON
@@ -2179,7 +2547,7 @@ function ScheduleStudio() {
                 <div key={t.id} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 7 }}>
                   <div style={{ width: 150, fontSize: 12, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flexShrink: 0 }}>{t.name}</div>
                   <div style={{ flex: 1, position: "relative", height: 20, background: "var(--surface2)", borderRadius: 999 }}>
-                    <div style={{ position: "absolute", left: b.left + "%", width: b.width + "%", top: 0, bottom: 0, background: `linear-gradient(180deg, ${t.color}, color-mix(in srgb, ${t.color} 75%, #000))`, borderRadius: 999, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.2)" }}>
+                    <div style={{ position: "absolute", left: b.left + "%", width: b.width + "%", top: 0, bottom: 0, background: t.color, borderRadius: 999, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,.25)", transition: "left .4s ease, width .4s ease, background .2s" }}>
                       <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: (t.progress || 0) + "%", background: "rgba(255,255,255,.4)" }} />
                     </div>
                   </div>
@@ -2214,9 +2582,12 @@ function ScheduleStudio() {
                   <td>{i + 1}</td>
                   <td className="l"><input className="es-cellinput l" value={t.name} onChange={(e) => upd(t.id, { name: e.target.value })} /></td>
                   <td className="l">
-                    <select className="es-cellinput l" value={t.phase} onChange={(e) => { const idx = PHASES.indexOf(e.target.value); upd(t.id, { phase: e.target.value, color: PHASE_COLORS[idx] || t.color }); }}>
-                      {PHASES.map((ph) => <option key={ph}>{ph}</option>)}
-                    </select>
+                    <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                      <input type="color" value={t.color || "#1f5a37"} onChange={(e) => upd(t.id, { color: e.target.value })} title="เลือกสีแถบ" style={{ width: 26, height: 26, border: "1px solid var(--border)", borderRadius: 6, padding: 0, cursor: "pointer", flexShrink: 0, background: "none" }} />
+                      <select className="es-cellinput l" value={t.phase} onChange={(e) => { const idx = PHASES.indexOf(e.target.value); upd(t.id, { phase: e.target.value, color: PHASE_COLORS[idx] || t.color }); }}>
+                        {PHASES.map((ph) => <option key={ph}>{ph}</option>)}
+                      </select>
+                    </div>
                   </td>
                   <td><input className="es-cellinput" type="date" value={t.start} onChange={(e) => upd(t.id, { start: e.target.value })} style={{ textAlign: "center" }} /></td>
                   <td><input className="es-cellinput" type="date" value={t.end} onChange={(e) => upd(t.id, { end: e.target.value })} style={{ textAlign: "center" }} /></td>
@@ -2530,6 +2901,546 @@ function PortImage({ value, onChange }) {
     <div onClick={() => ref.current.click()} style={{ aspectRatio: "16/9", background: "var(--surface2)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
       {value ? <img src={value} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <ImageIcon size={26} style={{ color: "var(--muted)" }} />}
       <input ref={ref} type="file" accept="image/*" hidden onChange={onFile} />
+    </div>
+  );
+}
+
+/* ============================== GENERIC RECORD MODULES ============================== */
+const STATUS_PAL = ["#5b8def", "#c8a45c", "#a3683f", "#2f6f4f", "#1f5a37", "#8a3b3b"];
+function statusColor(o, opts) { const i = Math.max(0, opts.indexOf(o)); return STATUS_PAL[i % STATUS_PAL.length]; }
+
+function ModField({ f, val, on }) {
+  if (f.t === "sel") return <select className="es-cellinput l" value={val ?? f.o[0]} onChange={(e) => on(e.target.value)}>{f.o.map((o) => <option key={o}>{o}</option>)}</select>;
+  if (f.t === "status") return <select className="es-cellinput l" value={val ?? f.o[0]} onChange={(e) => on(e.target.value)} style={{ fontWeight: 700, color: "#fff", background: statusColor(val ?? f.o[0], f.o), borderRadius: 8 }}>{f.o.map((o) => <option key={o} style={{ color: "#222", background: "#fff" }}>{o}</option>)}</select>;
+  if (f.t === "money" || f.t === "num") return <input className="es-cellinput l" type="number" value={val ?? ""} onChange={(e) => on(e.target.value === "" ? "" : +e.target.value)} />;
+  if (f.t === "date") return <input className="es-cellinput l" type="date" value={val || ""} onChange={(e) => on(e.target.value)} />;
+  if (f.t === "area") return <textarea className="es-cellinput l" value={val || ""} onChange={(e) => on(e.target.value)} rows={2} style={{ resize: "vertical", lineHeight: 1.5 }} />;
+  if (f.t === "photo") return <PortImage value={val} onChange={on} />;
+  return <input className="es-cellinput l" value={val || ""} onChange={(e) => on(e.target.value)} placeholder={f.ph || ""} />;
+}
+
+function AiSummarizeBtn({ rec, cfg, onWrite }) {
+  const [loading, setLoading] = useState(false);
+  const run = async () => {
+    setLoading(true);
+    try {
+      const ctx = cfg.from.map((k) => k + ": " + (rec[k] || "-")).join("\n");
+      const r = await callClaude(`${cfg.prompt}\nข้อมูลที่มี:\n${ctx}\nตอบ JSON: {"summary":"ข้อความสรุปแบบมืออาชีพ"}`, AI_SYS);
+      onWrite(r.summary || "");
+    } catch (e) { alert(e?.message || "AI error — ตรวจ API Key ในตั้งค่า"); }
+    setLoading(false);
+  };
+  return <button className="es-btn es-btn-primary" style={{ gridColumn: "1 / -1", justifyContent: "center" }} onClick={run} disabled={loading}><Sparkles size={14} /> {loading ? "กำลังให้ AI สรุป..." : cfg.label}</button>;
+}
+
+function RecordModule({ id }) {
+  const cfg = MODULES[id];
+  const { biz, setBiz, activeProjectId, projects } = useApp();
+  const [q, setQ] = useState("");
+  const [onlyThis, setOnlyThis] = useState(true);
+  const [printList, setPrintList] = useState(false);
+  const [printRec, setPrintRec] = useState(null);
+  const list = biz[id] || [];
+  const setList = (fn) => setBiz((b) => ({ ...b, [id]: fn(b[id] || []) }));
+  const add = () => setList((l) => [{ id: uid(), projectId: activeProjectId || "" }, ...l]);
+  const upd = (rid, patch) => setList((l) => l.map((x) => x.id === rid ? { ...x, ...patch } : x));
+  const del = (rid) => setList((l) => l.filter((x) => x.id !== rid));
+  const pName = (pid) => (projects.find((p) => p.id === pid) || {}).name || "";
+  const scoped = (onlyThis && activeProjectId) ? list.filter((r) => !r.projectId || r.projectId === activeProjectId) : list;
+  const filtered = q ? scoped.filter((r) => JSON.stringify(r).toLowerCase().includes(q.toLowerCase())) : scoped;
+
+  return (
+    <div>
+      <SectionHead title={cfg.title} sub={`${cfg.sub} · ${filtered.length} รายการ`}
+        action={<div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <button className="es-btn" onClick={() => setPrintList(true)} disabled={!filtered.length}><FileDown size={16} /> ออก PDF</button>
+          <button className="es-btn es-btn-primary" onClick={add}><Plus size={16} /> เพิ่มรายการ</button>
+        </div>} />
+      {cfg.note && (
+        <div style={{ background: "color-mix(in srgb, var(--accent2) 12%, transparent)", border: "1px solid var(--border)", borderRadius: 10, padding: 11, marginBottom: 14, fontSize: 12.5, display: "flex", gap: 8 }}>
+          <AlertTriangle size={15} style={{ color: "var(--accent2)", flexShrink: 0, marginTop: 1 }} />{cfg.note}
+        </div>
+      )}
+      <div style={{ display: "flex", gap: 10, marginBottom: 14, flexWrap: "wrap", alignItems: "center" }}>
+        <div style={{ position: "relative", flex: 1, minWidth: 180, maxWidth: 340 }}>
+          <Search size={16} style={{ position: "absolute", left: 11, top: 11, color: "var(--muted)" }} />
+          <input className="es-input" style={{ paddingLeft: 34 }} placeholder="ค้นหา" value={q} onChange={(e) => setQ(e.target.value)} />
+        </div>
+        {activeProjectId && <button className={`es-chip ${onlyThis ? "on" : ""}`} style={{ padding: "8px 12px" }} onClick={() => setOnlyThis((v) => !v)}>{onlyThis ? "เฉพาะโปรเจกต์นี้" : "ทุกโปรเจกต์"}</button>}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(330px,1fr))", gap: 12 }}>
+        {filtered.map((rec) => (
+          <div key={rec.id} className="es-card" style={{ padding: 14, position: "relative" }}>
+            <div style={{ position: "absolute", top: 8, right: 8, display: "flex", gap: 2, zIndex: 2 }}>
+              <button className="es-btn es-btn-ghost" style={{ padding: 5, border: "none" }} title="ออก PDF ใบนี้" onClick={() => setPrintRec(rec)}><FileDown size={14} /></button>
+              <button className="es-btn es-btn-ghost es-btn-danger" style={{ padding: 5, border: "none" }} onClick={() => del(rec.id)}><Trash2 size={14} /></button>
+            </div>
+            {rec.projectId && pName(rec.projectId) && <div style={{ fontSize: 10, color: "var(--accent)", fontWeight: 700, marginBottom: 6 }}>🔗 {pName(rec.projectId)}</div>}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9 }}>
+              {cfg.fields.map((f) => (
+                <div key={f.k} style={{ gridColumn: f.w === 2 ? "1 / -1" : "auto" }}>
+                  <label style={{ fontSize: 11, color: "var(--muted)", fontWeight: 600, display: "block", marginBottom: 3 }}>{f.l}</label>
+                  <ModField f={f} val={rec[f.k]} on={(v) => upd(rec.id, { [f.k]: v })} />
+                </div>
+              ))}
+              {cfg.aiSummary && <AiSummarizeBtn rec={rec} cfg={cfg.aiSummary} onWrite={(v) => upd(rec.id, { [cfg.aiSummary.target]: v })} />}
+            </div>
+          </div>
+        ))}
+        {filtered.length === 0 && <div style={{ color: "var(--muted)", padding: 24, gridColumn: "1 / -1", textAlign: "center" }}>ยังไม่มีรายการ — กด “เพิ่มรายการ” เพื่อเริ่ม</div>}
+      </div>
+      {printList && <DocPrint moduleId={id} records={filtered} onClose={() => setPrintList(false)} />}
+      {printRec && <DocPrint moduleId={id} records={[printRec]} single onClose={() => setPrintRec(null)} />}
+    </div>
+  );
+}
+const MODULES = {
+  leads: { title: "ลูกค้า / Leads", sub: "ตั้งแต่ทักมาจนปิดการขาย", fields: [
+    { k: "name", l: "ชื่อลูกค้า", t: "text", w: 2 },
+    { k: "phone", l: "ติดต่อ (โทร/Line)", t: "text" },
+    { k: "source", l: "มาจาก", t: "sel", o: ["Facebook", "Line", "TikTok", "Website", "คนแนะนำ", "Walk-in"] },
+    { k: "ptype", l: "ประเภทงาน", t: "sel", o: ["บ้าน", "คอนโด", "คาเฟ่", "คลินิก", "ร้านอาหาร", "ออฟฟิศ", "โรงแรม", "บูธ"] },
+    { k: "budget", l: "งบ (บาท)", t: "money" },
+    { k: "grade", l: "ความน่าสนใจ", t: "sel", o: ["A", "B", "C"] },
+    { k: "status", l: "สถานะ", t: "status", o: ["ทักมาใหม่", "นัดคุย", "เสนอราคาแล้ว", "รอปิดการขาย", "เซ็นสัญญา", "หลุด"] },
+    { k: "followup", l: "นัด Follow-up", t: "date" },
+    { k: "note", l: "โน้ต", t: "area", w: 2 },
+  ] },
+  brief: { title: "บรีฟลูกค้า / Design Brief", sub: "เก็บความต้องการก่อนออกแบบ + ให้ AI สรุป", fields: [
+    { k: "name", l: "โปรเจกต์/ลูกค้า", t: "text", w: 2 },
+    { k: "area", l: "พื้นที่ (ตร.ม.)", t: "num" },
+    { k: "level", l: "ระดับคุณภาพ", t: "sel", o: ["ประหยัด", "กลาง", "พรีเมียม", "ลักชัวรี"] },
+    { k: "like", l: "สไตล์ที่ชอบ", t: "text" },
+    { k: "dislike", l: "สไตล์ที่ไม่ชอบ", t: "text" },
+    { k: "func", l: "ฟังก์ชันที่ต้องการ", t: "area", w: 2 },
+    { k: "pain", l: "ปัญหาพื้นที่เดิม", t: "area", w: 2 },
+    { k: "budget", l: "งบ (บาท)", t: "money" },
+    { k: "deadline", l: "Deadline", t: "date" },
+    { k: "brief", l: "Design Brief (AI สรุป)", t: "area", w: 2 },
+  ], aiSummary: { from: ["name", "area", "level", "like", "dislike", "func", "pain", "budget"], target: "brief", label: "ให้ AI สรุปเป็น Design Brief", prompt: "สรุปข้อมูลลูกค้าให้เป็น Design Brief งานออกแบบภายในที่อ่านแล้วเริ่มออกแบบได้ทันที ครอบคลุมสไตล์ โทน ฟังก์ชัน งบ และข้อควรระวัง" } },
+  survey: { title: "สำรวจหน้างาน / Site Survey", sub: "บันทึกสภาพจริงก่อนออกแบบ/ก่อสร้าง", fields: [
+    { k: "name", l: "ชื่อจุด/พื้นที่", t: "text", w: 2 },
+    { k: "photo", l: "รูปหน้างาน", t: "photo", w: 2 },
+    { k: "w", l: "กว้าง (ม.)", t: "num" },
+    { k: "d", l: "ยาว (ม.)", t: "num" },
+    { k: "h", l: "สูงฝ้า (ม.)", t: "num" },
+    { k: "issue", l: "ประเภทปัญหา", t: "sel", o: ["ผนังร้าว", "พื้นเอียง", "น้ำรั่ว", "ไฟไม่พอ", "ความชื้น", "อื่นๆ"] },
+    { k: "status", l: "สถานะ", t: "status", o: ["ยังไม่แก้", "รออนุมัติ", "แก้แล้ว"] },
+    { k: "note", l: "รายละเอียด", t: "area", w: 2 },
+  ] },
+  drawings: { title: "ชุดแบบ / Drawing Package", sub: "คุมชุดแบบและ Revision", fields: [
+    { k: "name", l: "ชื่อแบบ (Sheet)", t: "text", w: 2 },
+    { k: "code", l: "รหัสแบบ", t: "text" },
+    { k: "type", l: "หมวด", t: "sel", o: ["Cover", "Layout", "Floor Plan", "Ceiling", "Lighting", "Electrical", "Furniture", "Elevation", "Section", "Detail", "Material"] },
+    { k: "rev", l: "Revision", t: "sel", o: ["Rev.00", "Rev.01", "Rev.02", "Rev.03", "Final"] },
+    { k: "status", l: "สถานะ", t: "status", o: ["ร่าง", "ส่งตรวจ", "แก้ไข", "อนุมัติ", "ล็อก Final"] },
+    { k: "note", l: "หมายเหตุ", t: "area", w: 2 },
+  ] },
+  procurement: { title: "จัดซื้อ / Procurement", sub: "สั่งของและคุม Supplier", fields: [
+    { k: "name", l: "รายการวัสดุ", t: "text", w: 2 },
+    { k: "supplier", l: "Supplier", t: "text" },
+    { k: "qty", l: "จำนวน", t: "num" },
+    { k: "cost", l: "ราคาทุน (บาท)", t: "money" },
+    { k: "deposit", l: "มัดจำ (บาท)", t: "money" },
+    { k: "lead", l: "Lead Time", t: "text" },
+    { k: "status", l: "สถานะของ", t: "status", o: ["รอสั่ง", "สั่งแล้ว", "กำลังผลิต", "ส่งแล้ว", "ถึงไซต์", "ตรวจรับแล้ว"] },
+    { k: "eta", l: "กำหนดเข้า", t: "date" },
+  ] },
+  daily: { title: "รายงานหน้างาน / Daily Report", sub: "บันทึกงานหน้างานรายวัน", fields: [
+    { k: "date", l: "วันที่", t: "date", w: 2 },
+    { k: "photo", l: "รูปหน้างาน", t: "photo", w: 2 },
+    { k: "workers", l: "จำนวนช่าง", t: "num" },
+    { k: "weather", l: "สภาพอากาศ", t: "sel", o: ["แดด", "เมฆ", "ฝน"] },
+    { k: "work", l: "งานที่ทำวันนี้", t: "area", w: 2 },
+    { k: "issue", l: "ปัญหา/อุปสรรค", t: "area", w: 2 },
+    { k: "progress", l: "คืบหน้ารวม %", t: "num" },
+  ] },
+  vo: { title: "งานเพิ่ม-ลด / Variation Order", sub: "กันงานเพิ่มฟรี — ต้องอนุมัติก่อนทำ", note: "เงื่อนไข “ไม่เซ็น ไม่เริ่มงาน” — ออกเอกสารและให้ลูกค้าอนุมัติก่อนลงมือทุกครั้ง", fields: [
+    { k: "name", l: "รายการงานเพิ่ม/ลด", t: "text", w: 2 },
+    { k: "kind", l: "ประเภท", t: "sel", o: ["งานเพิ่ม", "งานลด"] },
+    { k: "amount", l: "มูลค่า (บาท)", t: "money" },
+    { k: "days", l: "กระทบเวลา (วัน)", t: "num" },
+    { k: "reason", l: "เหตุผล", t: "area", w: 2 },
+    { k: "status", l: "สถานะ", t: "status", o: ["ร่าง", "ส่งลูกค้า", "ลูกค้าอนุมัติ", "เริ่มงาน", "เสร็จ"] },
+  ] },
+  qc: { title: "QC / Punch List", sub: "ตรวจงานก่อนส่งมอบ เก็บงานเป็นระบบ", fields: [
+    { k: "name", l: "จุดที่ตรวจ", t: "text", w: 2 },
+    { k: "photo", l: "รูปจุดบกพร่อง", t: "photo", w: 2 },
+    { k: "cat", l: "หมวดงาน", t: "sel", o: ["งานโครง", "งานไฟ", "งานฝ้า", "งานพื้น", "งานสี", "งานบิลท์อิน", "งานสุขภัณฑ์"] },
+    { k: "severity", l: "ระดับ", t: "sel", o: ["เล็กน้อย", "ปานกลาง", "รุนแรง"] },
+    { k: "owner", l: "ผู้แก้ไข", t: "text" },
+    { k: "due", l: "กำหนดแก้เสร็จ", t: "date" },
+    { k: "status", l: "สถานะ", t: "status", o: ["Failed", "กำลังแก้", "Rework", "Passed"] },
+    { k: "note", l: "รายละเอียด", t: "area", w: 2 },
+  ] },
+  payment: { title: "เบิกงวด / Progress Claim", sub: "คุมเงินเข้าให้ตามงาน", fields: [
+    { k: "name", l: "งวดที่/รายละเอียด", t: "text", w: 2 },
+    { k: "percent", l: "% งวด", t: "num" },
+    { k: "amount", l: "จำนวนเงิน (บาท)", t: "money" },
+    { k: "due", l: "ครบกำหนดชำระ", t: "date" },
+    { k: "status", l: "สถานะ", t: "status", o: ["รอวางบิล", "วางบิลแล้ว", "จ่ายแล้ว", "ค้างจ่าย"] },
+    { k: "note", l: "หมายเหตุ", t: "area", w: 2 },
+  ] },
+  handover: { title: "ส่งมอบงาน / Handover", sub: "ปิดงานแบบมืออาชีพ", fields: [
+    { k: "name", l: "รายการส่งมอบ", t: "text", w: 2 },
+    { k: "photo", l: "รูปงานเสร็จ", t: "photo", w: 2 },
+    { k: "doc", l: "เอกสารแนบ", t: "sel", o: ["Punch List", "As-built", "คู่มือใช้งาน", "ใบรับประกัน", "ใบส่งมอบ"] },
+    { k: "wStart", l: "เริ่มประกัน", t: "date" },
+    { k: "wEnd", l: "สิ้นสุดประกัน", t: "date" },
+    { k: "status", l: "สถานะ", t: "status", o: ["เตรียม", "ส่งมอบแล้ว", "ลูกค้ารับมอบ"] },
+    { k: "note", l: "หมายเหตุ", t: "area", w: 2 },
+  ] },
+  warranty: { title: "รับประกัน / Service", sub: "ดูแลหลังจบงาน เปิด Ticket ซ่อม", fields: [
+    { k: "name", l: "หัวข้อ/ลูกค้า", t: "text", w: 2 },
+    { k: "photo", l: "รูปปัญหา", t: "photo", w: 2 },
+    { k: "type", l: "ประเภท Defect", t: "sel", o: ["งานไม้", "งานสี", "งานไฟ", "งานน้ำ", "งานกระจก", "อื่นๆ"] },
+    { k: "inWarranty", l: "อยู่ในประกัน?", t: "sel", o: ["อยู่ในประกัน", "นอกประกัน"] },
+    { k: "visit", l: "นัดเข้าซ่อม", t: "date" },
+    { k: "status", l: "สถานะ Ticket", t: "status", o: ["เปิดใหม่", "นัดแล้ว", "กำลังซ่อม", "ปิดงาน"] },
+    { k: "note", l: "รายละเอียด/ผลซ่อม", t: "area", w: 2 },
+  ] },
+  meeting: { title: "บันทึกประชุม / Minutes", sub: "เก็บข้อตกลงทุกครั้ง", fields: [
+    { k: "name", l: "หัวข้อประชุม", t: "text", w: 2 },
+    { k: "date", l: "วันที่", t: "date" },
+    { k: "type", l: "ประเภท", t: "sel", o: ["Client Meeting", "Design Meeting", "Site Meeting"] },
+    { k: "attendees", l: "ผู้เข้าร่วม", t: "text", w: 2 },
+    { k: "decision", l: "ข้อสรุป (Decision)", t: "area", w: 2 },
+    { k: "action", l: "Action Item + ผู้รับผิดชอบ", t: "area", w: 2 },
+  ] },
+  docs: { title: "คลังเอกสาร / Document Center", sub: "รวมเอกสารทุกอย่างในโปรเจกต์", fields: [
+    { k: "name", l: "ชื่อเอกสาร", t: "text", w: 2 },
+    { k: "cat", l: "หมวด", t: "sel", o: ["สัญญา", "แบบ", "BOQ", "ใบเสนอราคา", "ใบเสร็จ", "ประชุม", "รูปงาน", "อื่นๆ"] },
+    { k: "ver", l: "เวอร์ชัน", t: "text" },
+    { k: "photo", l: "ไฟล์รูป/สแกน", t: "photo", w: 2 },
+    { k: "note", l: "หมายเหตุ", t: "area", w: 2 },
+  ] },
+};
+
+function QuotationPage() {
+  const { activeProject, setTab } = useApp();
+  const [show, setShow] = useState(false);
+  if (!activeProject) return <EmptyProject />;
+  const totals = calcProject(activeProject);
+  return (
+    <div>
+      <SectionHead title="ใบเสนอราคา / Quotation" sub={activeProject.name}
+        action={<button className="es-btn es-btn-primary" onClick={() => setShow(true)}><FileDown size={16} /> พิมพ์ใบเสนอราคา PDF</button>} />
+      <div className="es-card" style={{ padding: 18, maxWidth: 460 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0" }}><span style={{ color: "var(--muted)" }}>ต้นทุน (วัสดุ+แรง+เผื่อเสีย)</span><strong>{baht(totals.sumCost)} ฿</strong></div>
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0" }}><span style={{ color: "var(--muted)" }}>กำไร + overhead + commission</span><span>{baht(totals.sumProfit + totals.sumOverhead + totals.sumCommission)} ฿</span></div>
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0" }}><span style={{ color: "var(--muted)" }}>รวมก่อนภาษี</span><span>{baht(totals.preVat)} ฿</span></div>
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0" }}><span style={{ color: "var(--muted)" }}>VAT</span><span>+{baht(totals.vat)} ฿</span></div>
+        {totals.wht > 0 && <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0" }}><span style={{ color: "var(--muted)" }}>หัก ณ ที่จ่าย</span><span>−{baht(totals.wht)} ฿</span></div>}
+        <div className="es-divider" style={{ margin: "8px 0" }} />
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 18 }}><strong>ราคาสุทธิ</strong><strong style={{ color: "var(--accent)" }}>{baht(totals.net)} ฿</strong></div>
+        <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 12 }}>แก้รายการได้ในเมนู BOQ · ปรับเทมเพลต/โลโก้ในเมนูเทมเพลต PDF</p>
+      </div>
+      {show && <PrintModal project={activeProject} totals={totals} onClose={() => setShow(false)} />}
+    </div>
+  );
+}
+
+/* ============================== PROFESSIONAL PDF (ทุกหมวด) ============================== */
+function DocHeader({ company, title, project, docNo }) {
+  const today = new Date().toLocaleDateString("th-TH", { year: "numeric", month: "long", day: "numeric" });
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "3px solid #1f5a37", paddingBottom: 14, marginBottom: 18, gap: 16 }}>
+      <div style={{ display: "flex", gap: 12 }}>
+        {company.logo && <img src={company.logo} style={{ width: 54, height: 54, objectFit: "cover", borderRadius: 8 }} />}
+        <div>
+          <div style={{ fontWeight: 800, fontSize: 18 }}>{company.name || "บริษัทของคุณ"}</div>
+          <div style={{ fontSize: 11, color: "#555", maxWidth: 320 }}>{company.address}</div>
+          <div style={{ fontSize: 11, color: "#555" }}>{[company.phone, company.email].filter(Boolean).join(" · ")}</div>
+          {company.taxId && <div style={{ fontSize: 11, color: "#555" }}>เลขผู้เสียภาษี {company.taxId}</div>}
+        </div>
+      </div>
+      <div style={{ textAlign: "right", flexShrink: 0 }}>
+        <div style={{ fontSize: 20, fontWeight: 800, color: "#1f5a37" }}>{title}</div>
+        {project && <div style={{ fontSize: 12, marginTop: 4 }}><b>โครงการ:</b> {project.name}</div>}
+        {project?.client?.name && <div style={{ fontSize: 12 }}><b>ลูกค้า:</b> {project.client.name}</div>}
+        <div style={{ fontSize: 11, color: "#555", marginTop: 4 }}>เลขที่ {docNo}<br />วันที่ {today}</div>
+      </div>
+    </div>
+  );
+}
+
+function DocPrint({ moduleId, records, single, onClose }) {
+  const { company, activeProject } = useApp();
+  const cfg = MODULES[moduleId];
+  const [pageSize, setPageSize] = useState("A4");
+  const [orient, setOrient] = useState(single ? "portrait" : "landscape");
+  const cols = cfg.fields.filter((f) => f.t !== "area" && f.t !== "photo");
+  const areas = cfg.fields.filter((f) => f.t === "area");
+  const photoF = cfg.fields.find((f) => f.t === "photo");
+  const fmt = (f, v) => (v == null || v === "" ? "-" : f.t === "money" ? baht(v) + " ฿" : String(v));
+  const docNo = moduleId.toUpperCase() + "-" + new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  return (
+    <div className="es-modal-bg" onClick={onClose}>
+      <style>{`@page { size: ${pageSize} ${orient}; margin: 12mm; }`}</style>
+      <div style={{ background: "var(--surface)", borderRadius: 14, width: "100%", maxWidth: orient === "landscape" ? 1000 : 820, maxHeight: "92vh", overflow: "auto", padding: 16 }} onClick={(e) => e.stopPropagation()}>
+        <div className="no-print" style={{ display: "flex", justifyContent: "space-between", marginBottom: 12, gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+          <h3 style={{ margin: 0 }}>เอกสาร — {cfg.title}</h3>
+          <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+            <select className="es-select" style={{ width: 80 }} value={pageSize} onChange={(e) => setPageSize(e.target.value)}><option>A4</option><option>A3</option></select>
+            <select className="es-select" style={{ width: 120 }} value={orient} onChange={(e) => setOrient(e.target.value)}><option value="portrait">แนวตั้ง</option><option value="landscape">แนวนอน</option></select>
+            <button className="es-btn es-btn-primary" onClick={() => window.print()}><FileDown size={16} /> พิมพ์ / PDF</button>
+            <button className="es-btn" onClick={onClose}><X size={16} /></button>
+          </div>
+        </div>
+        <div id="print-area" style={{ background: "#fff", color: "#1a1a1a", padding: 32, fontFamily: "'Sarabun',sans-serif", fontSize: 12 }}>
+          <DocHeader company={company} title={cfg.title} project={activeProject} docNo={docNo} />
+          {single ? records.map((rec) => (
+            <div key={rec.id}>
+              {photoF && rec[photoF.k] && <img src={rec[photoF.k]} style={{ width: "100%", maxHeight: 320, objectFit: "cover", borderRadius: 10, marginBottom: 16 }} />}
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5 }}><tbody>
+                {cols.map((f) => (
+                  <tr key={f.k} style={{ borderBottom: "1px solid #eee" }}>
+                    <td style={{ padding: "9px 12px", fontWeight: 700, width: "35%", background: "#f4f7f4" }}>{f.l}</td>
+                    <td style={{ padding: "9px 12px" }}>{fmt(f, rec[f.k])}</td>
+                  </tr>
+                ))}
+                {areas.map((f) => (
+                  <tr key={f.k} style={{ borderBottom: "1px solid #eee" }}>
+                    <td style={{ padding: "9px 12px", fontWeight: 700, background: "#f4f7f4", verticalAlign: "top" }}>{f.l}</td>
+                    <td style={{ padding: "9px 12px", whiteSpace: "pre-wrap", lineHeight: 1.7 }}>{rec[f.k] || "-"}</td>
+                  </tr>
+                ))}
+              </tbody></table>
+            </div>
+          )) : (
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 10.5 }}>
+              <thead><tr style={{ background: "#1f5a37", color: "#fff" }}>
+                <th style={{ padding: 7, width: 24 }}>#</th>
+                {cols.map((f) => <th key={f.k} style={{ padding: 7, textAlign: "left" }}>{f.l}</th>)}
+              </tr></thead>
+              <tbody>
+                {records.map((rec, i) => (
+                  <tr key={rec.id} style={{ borderBottom: "1px solid #eee" }}>
+                    <td style={{ padding: 6, textAlign: "center" }}>{i + 1}</td>
+                    {cols.map((f) => <td key={f.k} style={{ padding: 6 }}>{fmt(f, rec[f.k])}</td>)}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: 50, gap: 30 }}>
+            {["ผู้จัดทำ", "ผู้อนุมัติ", "ลูกค้ารับทราบ"].map((r) => (
+              <div key={r} style={{ flex: 1, textAlign: "center", fontSize: 11 }}>
+                <div style={{ borderTop: "1px solid #999", margin: "0 12px", paddingTop: 6 }}>{r}</div>
+                <div style={{ color: "#888", marginTop: 4 }}>วันที่ ____/____/____</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 18, fontSize: 9, color: "#999", textAlign: "center" }}>เอกสารจัดทำโดยระบบ CONS {company.name ? "· " + company.name : ""}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================== AI IMAGE STUDIO ============================== */
+function ImageStudio() {
+  const [src, setSrc] = useState("");
+  const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [bri, setBri] = useState(100), [con, setCon] = useState(100), [sat, setSat] = useState(100), [rot, setRot] = useState(0);
+  const [scale, setScale] = useState(2);
+  const [aiBusy, setAiBusy] = useState(false);
+  const aiUpscale = async () => {
+    if (!src) return; setAiBusy(true);
+    try {
+      const r = await fetch("/api/upscale", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ image: src, scale }) });
+      const d = await r.json();
+      if (d.url) { setSrc(d.url); alert("ขยายด้วย AI สำเร็จ — กดบันทึกรูปเพื่อดาวน์โหลด"); }
+      else alert(d.error || "ยังไม่ได้เปิดบริการ AI upscale บนเซิร์ฟเวอร์");
+    } catch (e) { alert("AI upscale ล้มเหลว"); }
+    setAiBusy(false);
+  };
+  const fileRef = useRef(null);
+  const filterStr = `brightness(${bri}%) contrast(${con}%) saturate(${sat}%)`;
+
+  const gen = () => {
+    if (!prompt.trim()) return;
+    setLoading(true);
+    const u = "https://image.pollinations.ai/prompt/" + encodeURIComponent(prompt + ", high quality, highly detailed, sharp, 4k") + "?width=1024&height=1024&model=flux&nologo=true&seed=" + Math.floor(Math.random() * 99999);
+    const im = new Image();
+    im.onload = () => { setSrc(u); setLoading(false); };
+    im.onerror = () => { setSrc(u); setLoading(false); };
+    im.src = u;
+  };
+  const onFile = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { setSrc(r.result); setBri(100); setCon(100); setSat(100); setRot(0); }; r.readAsDataURL(f); };
+
+  const download = () => {
+    if (!src) return;
+    const im = new Image(); im.crossOrigin = "anonymous";
+    im.onload = () => {
+      const W = im.width * scale, H = im.height * scale;
+      const rotated = rot % 180 !== 0;
+      const cv = document.createElement("canvas");
+      cv.width = rotated ? H : W; cv.height = rotated ? W : H;
+      const ctx = cv.getContext("2d");
+      ctx.filter = filterStr;
+      ctx.translate(cv.width / 2, cv.height / 2);
+      ctx.rotate((rot * Math.PI) / 180);
+      ctx.drawImage(im, -W / 2, -H / 2, W, H);
+      try {
+        const a = document.createElement("a");
+        a.href = cv.toDataURL("image/jpeg", 0.95);
+        a.download = "cons-image-" + scale + "x.jpg"; a.click();
+      } catch (err) { alert("รูปจากเน็ตติดสิทธิ์ CORS บันทึกไม่ได้ — ลองดาวน์โหลดรูปมาก่อนแล้วอัปโหลดเข้ามาปรับแต่ง"); }
+    };
+    im.onerror = () => alert("โหลดรูปไม่สำเร็จ");
+    im.src = src;
+  };
+
+  const Slider = ({ label, val, set, min, max }) => (
+    <div style={{ marginBottom: 10 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "var(--muted)", marginBottom: 4 }}><span>{label}</span><span>{val}{label === "หมุน" ? "°" : "%"}</span></div>
+      <input type="range" min={min} max={max} value={val} onChange={(e) => set(+e.target.value)} style={{ width: "100%", accentColor: "var(--accent)" }} />
+    </div>
+  );
+
+  return (
+    <div>
+      <SectionHead title="สตูดิโอภาพ AI" sub="สร้างภาพด้วย AI · ปรับแต่ง · ขยายขนาด แล้วบันทึก" />
+      <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+        <input className="es-input" style={{ flex: 1, minWidth: 220 }} value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder='สร้างภาพ เช่น "คาเฟ่ Japandi โทนไม้ แสงธรรมชาติ"' onKeyDown={(e) => e.key === "Enter" && gen()} />
+        <button className="es-btn es-btn-primary" onClick={gen} disabled={loading}><Sparkles size={16} /> {loading ? "กำลังสร้าง..." : "สร้างภาพ AI"}</button>
+        <button className="es-btn" onClick={() => fileRef.current.click()}><Upload size={16} /> อัปโหลดรูป</button>
+        <input ref={fileRef} type="file" accept="image/*" hidden onChange={onFile} />
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 240px", gap: 16, alignItems: "start" }} className="es-imgstudio">
+        <div className="es-card" style={{ padding: 14, display: "flex", alignItems: "center", justifyContent: "center", minHeight: 360, background: "var(--surface2)" }}>
+          {src ? (
+            <img src={src} style={{ maxWidth: "100%", maxHeight: 480, borderRadius: 10, filter: filterStr, transform: `rotate(${rot}deg)`, transition: "filter .2s" }} />
+          ) : (
+            <div style={{ textAlign: "center", color: "var(--muted)" }}><ImageIcon size={40} /><div style={{ marginTop: 8 }}>สร้างภาพ AI หรืออัปโหลดรูปเพื่อเริ่ม</div></div>
+          )}
+        </div>
+        <div className="es-card" style={{ padding: 16 }}>
+          <h4 style={{ margin: "0 0 12px", fontSize: 14 }}>ปรับแต่ง</h4>
+          <Slider label="ความสว่าง" val={bri} set={setBri} min={20} max={200} />
+          <Slider label="คอนทราสต์" val={con} set={setCon} min={20} max={200} />
+          <Slider label="ความอิ่มสี" val={sat} set={setSat} min={0} max={250} />
+          <Slider label="หมุน" val={rot} set={setRot} min={0} max={270} />
+          <button className="es-btn" style={{ width: "100%", justifyContent: "center", marginBottom: 14 }} onClick={() => { setBri(100); setCon(100); setSat(100); setRot(0); }}>รีเซ็ตการปรับแต่ง</button>
+          <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 4, fontWeight: 600 }}>ขยายขนาด (Upscale)</div>
+          <div style={{ display: "flex", gap: 6, marginBottom: 6 }}>
+            {[1, 2, 4].map((s) => <button key={s} className={`es-chip ${scale === s ? "on" : ""}`} style={{ flex: 1, justifyContent: "center" }} onClick={() => setScale(s)}>{s}x</button>)}
+          </div>
+          <div style={{ fontSize: 10.5, color: "var(--muted)", marginBottom: 10, lineHeight: 1.5 }}>“ขยายด้วย AI” ใช้ Real-ESRGAN บนเซิร์ฟเวอร์ (เติมรายละเอียดจริง — ต้องตั้งค่า REPLICATE_API_TOKEN) · ปุ่มบันทึกด้านล่างเป็นการขยายพิกเซลปกติ</div>
+          <button className="es-btn" style={{ width: "100%", justifyContent: "center", marginBottom: 8 }} onClick={aiUpscale} disabled={!src || aiBusy}><Sparkles size={16} /> {aiBusy ? "กำลังขยายด้วย AI..." : "ขยายด้วย AI (4K)"}</button>
+          <button className="es-btn es-btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={download} disabled={!src}><FileDown size={16} /> บันทึกรูป {scale}x (พิกเซล)</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================== HUMAN DIMENSION (ขนาดมาตรฐาน) ============================== */
+const HUMAN_DIM = [
+  { cat: "ที่นั่ง / โซฟา", icon: "🛋️", items: [
+    { t: "ความสูงที่นั่ง (Seat Height)", d: "ระยะจากพื้นถึงเบาะนั่ง ให้เท้าวางพื้นพอดี", dims: [["ที่นั่งทั่วไป", "40–45 ซม."], ["โซฟานั่งสบาย", "38–42 ซม."]] },
+    { t: "ความลึก-กว้างที่นั่ง", d: "ความลึกเบาะและความกว้างต่อ 1 ที่นั่ง", dims: [["ลึกเบาะ", "50–60 ซม."], ["กว้าง/ที่นั่ง", "60–75 ซม."]] },
+    { t: "พนักพิง", d: "ความสูงพนักพิงจากเบาะ", dims: [["พิงหลังเตี้ย", "35–45 ซม."], ["พิงหลังสูง", "60–70 ซม."]] },
+    { t: "ระยะโต๊ะกลาง", d: "ระยะจากขอบโซฟาถึงโต๊ะกลาง", dims: [["ช่องวางขา", "30–45 ซม."]] },
+  ] },
+  { cat: "โต๊ะอาหาร / รับประทานอาหาร", icon: "🍽️", items: [
+    { t: "ความสูงโต๊ะ-เก้าอี้", d: "มาตรฐานโต๊ะอาหารและที่นั่ง", dims: [["สูงโต๊ะ", "73–76 ซม."], ["สูงที่นั่งเก้าอี้", "43–46 ซม."], ["ช่องเข่าใต้โต๊ะ", "60–65 ซม."]] },
+    { t: "พื้นที่ต่อ 1 ที่นั่ง", d: "ความกว้าง×ลึกของที่วางจานต่อคน", dims: [["กว้าง/คน", "60 ซม."], ["ลึก/คน", "40 ซม."]] },
+    { t: "ระยะดึงเก้าอี้ + ลุก", d: "ระยะจากขอบโต๊ะถึงผนัง/เฟอร์นิเจอร์หลัง เพื่อดึงเก้าอี้และลุกได้", dims: [["ดึงเก้าอี้", "75–90 ซม."], ["มีคนเดินผ่านหลัง", "100–120 ซม."]] },
+  ] },
+  { cat: "ครัว (Kitchen)", icon: "🔪", items: [
+    { t: "เคาน์เตอร์ครัว", d: "ความสูง/ลึกเคาน์เตอร์ และตู้ลอย", dims: [["สูงเคาน์เตอร์", "85–90 ซม."], ["ลึกเคาน์เตอร์", "60 ซม."], ["ตู้ลอยสูงจากเคาน์เตอร์", "50–60 ซม."]] },
+    { t: "ทางเดินในครัว", d: "ระยะระหว่างเคาน์เตอร์สองฝั่ง", dims: [["1 คนทำงาน", "100–110 ซม."], ["2 คน/มีคนเดินผ่าน", "120–150 ซม."]] },
+    { t: "สามเหลี่ยมงานครัว", d: "เตา–ซิงก์–ตู้เย็น รวมระยะที่เหมาะ", dims: [["ผลรวม 3 ด้าน", "4–8 ม."]] },
+  ] },
+  { cat: "ห้องน้ำ / สุขภัณฑ์", icon: "🚿", items: [
+    { t: "โถสุขภัณฑ์", d: "พื้นที่ใช้งานรอบโถ", dims: [["กว้างพื้นที่โถ", "80–90 ซม."], ["ระยะหน้าโถ", "≥ 60 ซม."]] },
+    { t: "อ่างล้างหน้า", d: "ความสูงและระยะด้านหน้า", dims: [["สูงอ่าง", "80–85 ซม."], ["ระยะหน้าอ่าง", "55–70 ซม."]] },
+    { t: "ฝักบัว / ที่อาบน้ำ", d: "ขนาดพื้นที่ขั้นต่ำ", dims: [["พื้นที่ขั้นต่ำ", "90×90 ซม."], ["สบาย", "100×100 ซม."]] },
+    { t: "ราวจับ (ผู้สูงอายุ)", d: "ความสูงติดตั้งราวจับนิรภัย", dims: [["สูงราวจับ", "70–80 ซม."]] },
+  ] },
+  { cat: "ห้องนอน / เตียง", icon: "🛏️", items: [
+    { t: "ขนาดที่นอนมาตรฐาน", d: "กว้าง×ยาว", dims: [["เดี่ยว 3.5 ฟุต", "107×200 ซม."], ["ควีน 5 ฟุต", "150×200 ซม."], ["คิง 6 ฟุต", "180×200 ซม."]] },
+    { t: "ระยะรอบเตียง", d: "ทางเดินข้างและปลายเตียง", dims: [["ข้างเตียง", "60–70 ซม."], ["ปลายเตียง", "≥ 90 ซม."]] },
+    { t: "ตู้เสื้อผ้า", d: "ความลึกและราวแขวน", dims: [["ลึกตู้", "60 ซม."], ["สูงราวแขวนเสื้อยาว", "150–170 ซม."]] },
+  ] },
+  { cat: "ทางเดิน / ระยะสัญจร", icon: "🚶", items: [
+    { t: "ความกว้างทางเดิน", d: "ระยะสัญจรในอาคาร", dims: [["คนเดียว", "60–75 ซม."], ["สองคนสวนกัน", "110–120 ซม."], ["ทางเดินหลัก", "≥ 120 ซม."]] },
+    { t: "ประตู", d: "ความกว้างช่องประตู", dims: [["ประตูห้องทั่วไป", "80–90 ซม."], ["ประตูหลัก", "90–100 ซม."]] },
+    { t: "รองรับวีลแชร์ (Universal)", d: "ระยะสำหรับเก้าอี้ล้อ", dims: [["ทางผ่าน", "≥ 90 ซม."], ["วงเลี้ยวกลับตัว", "150×150 ซม."]] },
+  ] },
+  { cat: "ที่ทำงาน / ออฟฟิศ", icon: "💻", items: [
+    { t: "โต๊ะทำงาน", d: "ความสูงและขนาดหน้าโต๊ะ", dims: [["สูงโต๊ะ", "72–75 ซม."], ["หน้าโต๊ะ", "120×60 ซม."]] },
+    { t: "ระยะเก้าอี้ + ลุก", d: "ระยะถอยเก้าอี้ด้านหลัง", dims: [["ถอยเก้าอี้", "90–100 ซม."]] },
+    { t: "ระยะมองจอ", d: "ระยะสายตาถึงจอคอม", dims: [["ระยะจอ", "50–70 ซม."], ["ขอบบนจอระดับสายตา", "—"]] },
+  ] },
+  { cat: "ร้านค้า / เคาน์เตอร์", icon: "🏬", items: [
+    { t: "เคาน์เตอร์บริการ/แคชเชียร์", d: "ความสูงฝั่งลูกค้าและพนักงาน", dims: [["ฝั่งลูกค้า", "100–110 ซม."], ["ฝั่งพนักงาน (โต๊ะ)", "72–90 ซม."]] },
+    { t: "ทางเดินในร้าน", d: "ระยะระหว่างชั้นวางสินค้า", dims: [["ทางรอง", "90–120 ซม."], ["ทางหลัก", "120–180 ซม."]] },
+    { t: "ชั้นวางสินค้า", d: "ระดับหยิบสินค้าได้สบาย", dims: [["ช่วงหยิบสบาย", "60–150 ซม."], ["สูงสุดที่เอื้อม", "180 ซม."]] },
+  ] },
+  { cat: "บันได / ราวจับ", icon: "🪜", items: [
+    { t: "ลูกตั้ง-ลูกนอน", d: "สัดส่วนขั้นบันไดที่ปลอดภัย", dims: [["ลูกตั้ง (สูง)", "15–18 ซม."], ["ลูกนอน (ลึก)", "25–30 ซม."]] },
+    { t: "ราวจับ + ความกว้าง", d: "ราวจับและความกว้างบันได", dims: [["สูงราวจับ", "80–90 ซม."], ["กว้างบันได", "≥ 90 ซม."], ["headroom เหนือหัว", "≥ 200 ซม."]] },
+  ] },
+  { cat: "ระยะเอื้อม / สายตา", icon: "👁️", items: [
+    { t: "ระยะเอื้อม (ยืน)", d: "ระดับเอื้อมหยิบของ", dims: [["เอื้อมสูงสุด", "200–210 ซม."], ["เอื้อมสบาย", "140–160 ซม."]] },
+    { t: "ระดับสายตา", d: "ใช้จัดป้าย/ของโชว์", dims: [["ยืน", "150–165 ซม."], ["นั่ง", "115–125 ซม."]] },
+    { t: "ระดับแขวนภาพ", d: "จุดกึ่งกลางภาพจากพื้น", dims: [["กึ่งกลางภาพ", "145–150 ซม."]] },
+  ] },
+];
+
+function HumanDim() {
+  const [open, setOpen] = useState({ 0: true });
+  const [q, setQ] = useState("");
+  const toggle = (i) => setOpen((o) => ({ ...o, [i]: !o[i] }));
+  return (
+    <div>
+      <SectionHead title="ขนาดมาตรฐานมนุษย์ (Human Dimension)" sub="ค่าการยศาสตร์มาตรฐานสำหรับออกแบบพื้นที่ภายใน" />
+      <div style={{ background: "color-mix(in srgb, var(--accent2) 12%, transparent)", border: "1px solid var(--border)", borderRadius: 12, padding: 12, marginBottom: 16, fontSize: 12.5, display: "flex", gap: 8 }}>
+        <AlertTriangle size={15} style={{ color: "var(--accent2)", flexShrink: 0, marginTop: 1 }} />
+        เป็นค่ามาตรฐานทั่วไปเพื่อใช้อ้างอิงเบื้องต้น ควรปรับตามกลุ่มผู้ใช้จริง (เด็ก/ผู้สูงอายุ/วีลแชร์) และกฎหมายอาคารของแต่ละพื้นที่
+      </div>
+      <div style={{ position: "relative", marginBottom: 16, maxWidth: 360 }}>
+        <Search size={16} style={{ position: "absolute", left: 11, top: 11, color: "var(--muted)" }} />
+        <input className="es-input" style={{ paddingLeft: 34 }} placeholder="ค้นหา เช่น เคาน์เตอร์ / ทางเดิน / เตียง" value={q} onChange={(e) => setQ(e.target.value)} />
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {HUMAN_DIM.map((sec, i) => {
+          const items = sec.items.filter((it) => !q || (it.t + it.d + JSON.stringify(it.dims)).includes(q));
+          if (q && items.length === 0) return null;
+          const isOpen = q ? true : open[i];
+          return (
+            <div key={i} className="es-card" style={{ overflow: "hidden" }}>
+              <div onClick={() => toggle(i)} style={{ padding: 14, display: "flex", alignItems: "center", gap: 10, cursor: "pointer", background: "color-mix(in srgb, var(--accent) 7%, var(--surface))" }}>
+                <div style={{ fontSize: 22 }}>{sec.icon}</div>
+                <strong style={{ flex: 1, fontSize: 15 }}>{sec.cat}</strong>
+                {isOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+              </div>
+              {isOpen && (
+                <div style={{ padding: "6px 14px 14px", display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 10 }}>
+                  {items.map((it, j) => (
+                    <div key={j} className="es-soft" style={{ borderRadius: 12, padding: 12 }}>
+                      <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 3 }}>{it.t}</div>
+                      <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 8, lineHeight: 1.5 }}>{it.d}</div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                        {it.dims.map(([l, v], k) => (
+                          <div key={k} style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 8, padding: "5px 9px", fontSize: 12 }}>
+                            <span style={{ color: "var(--muted)" }}>{l}: </span><strong style={{ color: "var(--accent)" }}>{v}</strong>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 14 }}>อยากรู้ขนาดเฉพาะจุด พิมพ์ถามที่เมนูผู้ช่วย AI ได้ เช่น “ระยะเคาน์เตอร์บาร์สูงเท่าไหร่”</div>
     </div>
   );
 }
